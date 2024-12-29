@@ -31,3 +31,17 @@ export const BotonGeneral = styled.button`
     color: #fff;
   }
 `;
+export const InputGeneral = styled.input`
+  border: 1px solid ${Theme.neutral.neutral600};
+  outline: none;
+  height: 30px;
+  border-radius: 4px;
+  padding: 5px;
+  background-color: ${Theme.neutral.blancoHueso};
+
+  /* width: 200px; */
+  min-width: 180px;
+  &:focus {
+    border: 1px solid ${Theme.secondary.azulBrillante};
+  }
+`;

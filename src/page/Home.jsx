@@ -10,6 +10,7 @@ import Articulos from "../components/Articulos";
 import ImagenBigSection from "../components/ImagenBigSection";
 import CarrucelMarcas from "./Partes01Home/CarrucelMarcas";
 import Registrarse from "../components/Registrarse";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -43,9 +44,20 @@ export default function Home() {
       </Seccion>
       <Seccion className=" bgWhite">
         <TituloSeccion>Forma parte</TituloSeccion>
+        <SubtituloSeccion>
+          Aprovecha descuentos en todos los productos y otros beneficios.
+        </SubtituloSeccion>
         <Registrarse />
       </Seccion>
-      <Seccion className="probando"></Seccion>
+      <Seccion className=" bgWhite">
+        <TituloSeccion>En liquidacion</TituloSeccion>
+        <Articulos tipo={"masVendidos"} />
+      </Seccion>
+      <Seccion className=" bgWhite">
+        <TituloSeccion>5 estrellas</TituloSeccion>
+        <Articulos tipo={"masVendidos"} />
+      </Seccion>
+      <Footer />
     </Container>
   );
 }
@@ -86,10 +98,17 @@ const Seccion = styled.div`
 const TituloSeccion = styled.h2`
   width: 100%;
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   font-size: 2rem;
   color: ${Theme.secondary.azulBrillante};
   text-decoration: underline;
+`;
+const SubtituloSeccion = styled.h3`
+  width: 100%;
+  text-align: center;
+  color: ${Theme.neutral.neutral600};
+  font-size: 2rem;
+  margin-bottom: 30px;
 `;
 const WrapHeaderHero = styled.div`
   height: 100vh;

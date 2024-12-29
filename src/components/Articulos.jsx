@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Theme from "../config/Theme";
 import { ArticulosLista, CategoriasLista } from "../DB/DB";
 import Articulo from "./Articulo";
-import { BotonGeneral } from "./BotonGeneral";
+import { BotonGeneral } from "./ElementosGenerales";
 
 export default function Articulos({ tipo }) {
   const [itemParsed, setItemParsed] = useState([]);
@@ -73,6 +73,8 @@ const Container = styled.div`
 const Wrap = styled.div`
   width: 300px;
   width: 180px;
+  border: 1px solid ${Theme.neutral.neutral600};
+  box-shadow: ${Theme.config.sombra};
 `;
 const CajaItems = styled.div`
   width: 180px;

@@ -44,7 +44,6 @@ export default function Header({ home }) {
           <NavItem>Accesorios</NavItem>
           <NavItem>Alimentos</NavItem>
           <NavItem>Ofertas</NavItem>
-          <NavItem>Nosotros</NavItem>
           <NavItem>Contactos</NavItem>
         </NavList>
         <CajaLog className="carrito">

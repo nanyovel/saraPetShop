@@ -7,7 +7,7 @@ import ImgTurtle1 from "../../public/img/animales/turtle1.jpg";
 import ImgPerro1 from "../../public/img/animales/perro1.jpg";
 import ImgCat1 from "../../public/img/animales/cat1.png";
 import ImgBird1 from "../../public/img/animales/bird1.png";
-import { BotonGeneral } from "./BotonGeneral";
+import { BotonGeneral } from "./ElementosGenerales";
 
 export default function Escaparate() {
   const items = [
