@@ -58,7 +58,7 @@ export default function Header({ home }) {
 }
 // const Container = styled(ContenedorMaster)`
 const Container = styled.header`
-  width: 100%;
+  width: 100vw;
   height: 90px;
   /* background-color: ${Theme.primary.rojoCalido}; */
   /* color: ${Theme.neutral.blancoHueso}; */
@@ -66,7 +66,7 @@ const Container = styled.header`
   background-color: black;
   color: ${Theme.primary.rojoBrillante};
   z-index: 2;
-  padding: 0 ${Theme.config.paddingLateral};
+  padding: 1px ${Theme.config.paddingLateral};
   &.home {
     position: absolute;
     top: 0;

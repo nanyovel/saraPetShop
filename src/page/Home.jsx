@@ -7,6 +7,7 @@ import BarraMensaje from "../components/BarraMensaje";
 import Categorias from "../components/Categorias";
 import Theme from "../config/Theme";
 import Articulos from "../components/Articulos";
+import ImagenBigSection from "../components/ImagenBigSection";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
         <TituloSeccion>En ofertas</TituloSeccion>
         <Articulos />
       </Seccion>
+      <ImagenBigSection />
     </Container>
   );
 }

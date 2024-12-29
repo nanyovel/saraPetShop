@@ -20,6 +20,7 @@ body {
   font-family: "Lato", sans-serif;
   /* background: #535353; */
   background-color: #f1faee;
+  overflow-x: hidden;
 }
 
 /* body::-webkit-scrollbar{

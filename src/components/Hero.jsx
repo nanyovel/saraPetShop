@@ -17,5 +17,5 @@ const Container = styled.div`
   /* top: 0; */
   /* background-color: black; */
   background-color: ${Theme.primary.azulSuave};
-  width: 100%;
+  width: 100vw;
 `;
