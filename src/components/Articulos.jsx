@@ -5,17 +5,31 @@ import { ArticulosLista, CategoriasLista } from "../DB/DB";
 import Articulo from "./Articulo";
 import { BotonGeneral } from "./BotonGeneral";
 
-export default function Articulos() {
+export default function Articulos({ tipo }) {
   const [itemParsed, setItemParsed] = useState([]);
   useEffect(() => {
-    setItemParsed(
-      ArticulosLista.map((item) => {
-        return {
-          ...item,
-          hover: false,
-        };
-      })
-    );
+    let itemsAux = ArticulosLista.map((item) => {
+      return {
+        ...item,
+        hover: false,
+      };
+    });
+    if (tipo == "ofertas") {
+      itemsAux = itemsAux.filter((item, index) => {
+        if (index < 5) {
+          return item;
+        }
+      });
+    }
+    if (tipo == "masVendidos") {
+      itemsAux = itemsAux.filter((item, index) => {
+        if (index > 2) {
+          return item;
+        }
+      });
+    }
+
+    setItemParsed(itemsAux);
   }, [ArticulosLista]);
 
   return (
@@ -37,16 +51,10 @@ export default function Articulos() {
                 <Titulo title={item.nombre}>{item.nombre}</Titulo>
               </CajitaDetalles>
               <CajitaDetalles>
-                <Titulo className="parrafo">
-                  Los mejores KOi que tenemos en Rep. DOm Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Corrupti, minus magni
-                  voluptates ipsum ea laboriosam aut, excepturi cum placeat modi
-                  numquam nisi consectetur dolores commodi nemo provident optio
-                  illo veritatis.
-                </Titulo>
+                <Titulo className="parrafo">{item.textoCopy}</Titulo>
               </CajitaDetalles>
               <CajitaDetalles>
-                <BtnSimple>Ver detalles</BtnSimple>
+                <BtnSimple>Añadir al carrito</BtnSimple>
               </CajitaDetalles>
             </CajaDetalles>
           </Wrap>

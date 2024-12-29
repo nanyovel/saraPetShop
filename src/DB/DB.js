@@ -116,6 +116,78 @@ export const ArticulosLista = [
       },
     ],
   },
+  {
+    precio: 148,
+    nombre: "Plato de ceramica para perros",
+    marca: "Sure pet care",
+    calificacion: 3.7,
+    categoria: "perros",
+    tipo: "plato",
+    textoCopy:
+      "El comedero de cerámica con huella para perros de Trixie es una opción elegante y funcional para las comidas diarias de tu mascota. Su diseño en color gris con detalles de huellas en un complemento también decorativo.",
+    fotos: [
+      {
+        url: "https://static.miscota.com/media/1/photos/products/517043/comedero-huella-perro-66f69d385998f_g.jpg",
+      },
+      {
+        url: "https://static.miscota.com/media/1/photos/products/517043/comedero-de-ceramica-huella-66f69d3b9b4dc_g.webp",
+      },
+    ],
+  },
+  {
+    precio: 700,
+    nombre: "Musqui Pelota de Tenis Amarilla para Perros",
+    marca: "Musqui",
+    calificacion: 4.7,
+    categoria: "gatos",
+    tipo: "juguete",
+    textoCopy:
+      "La pelota de tenis de Musqui es el aliado perfecto para las tardes de parque y diversión. Esta pelota está hecha de caucho con lo que garantiza su durabilidad y resistencia a mordidas, sin dejar de ser ligera, para que tu puedas tirarla con facilidad y tu perro traerla sin problema. ",
+    fotos: [
+      {
+        url: "https://static.miscota.com/media/1/photos/products/505825/Pelota-de-Tenis-Amarilla-para-Perros-66607fc890568_g.webp",
+      },
+      {
+        url: "https://static.miscota.com/media/1/photos/products/505825/Pelotas-Tenis-2-63ac588840e05_g.jpg",
+      },
+    ],
+  },
+  {
+    precio: 700,
+    nombre: "SUMSU Agua de Colonia Essential Mist para Perros y Gatos",
+    marca: "SAMSU",
+    calificacion: 4.9,
+    categoria: "perros",
+    tipo: "medicina",
+    textoCopy:
+      "Agua de Colonia Essential Mist es una fragancia baja en alcohol que respeta el olfato de tu perro o gato. Su fórmula contiene extractos naturales de flores como la cereza, la almendra, la frambuesa y la rosa damascena, que aportan frescura y suavidad.",
+    fotos: [
+      {
+        url: "https://static.miscota.com/media/1/photos/products/512709/essential-mist-01-65645b447ba04_g.png",
+      },
+      {
+        url: "https://static.miscota.com/media/1/photos/products/512709/138b9c4f-5d69-4f47-b4d2-22b90d409dc7-655b4fa97793d_g.png",
+      },
+    ],
+  },
+  {
+    precio: 700,
+    nombre: "Sure Petcare Comedero Automático con Microchip SureFeed",
+    marca: "Sure Petcare",
+    calificacion: 3.1,
+    categoria: "gatos",
+    tipo: "plato",
+    textoCopy:
+      "El plato queda sellado y mantiene la comida fresca y libre de moscas. Asegúrale un bocado rico y apetitoso en cualquier momento del día..",
+    fotos: [
+      {
+        url: "https://static.miscota.com/media/1/photos/products/072452/72452-5060180391324_0_g.png",
+      },
+      {
+        url: "https://static.miscota.com/media/1/photos/products/072452/72452-5060180391324-3_3_g.png",
+      },
+    ],
+  },
 ];
 
 export const CategoriasLista = [

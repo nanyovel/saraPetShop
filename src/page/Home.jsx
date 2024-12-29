@@ -25,9 +25,15 @@ export default function Home() {
       </Seccion>
       <Seccion className="padding bgWhite">
         <TituloSeccion>En ofertas</TituloSeccion>
-        <Articulos />
+        <Articulos tipo={"ofertas"} />
       </Seccion>
-      <ImagenBigSection />
+      <Seccion>
+        <ImagenBigSection />
+      </Seccion>
+      <Seccion className=" bgWhite">
+        <TituloSeccion>Mas vendidos</TituloSeccion>
+        <Articulos tipo={"masVendidos"} />
+      </Seccion>
     </Container>
   );
 }

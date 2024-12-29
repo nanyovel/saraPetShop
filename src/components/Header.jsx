@@ -4,7 +4,7 @@ import Theme from "../config/Theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 export default function Header({ home }) {
@@ -47,6 +47,11 @@ export default function Header({ home }) {
           <NavItem>Nosotros</NavItem>
           <NavItem>Contactos</NavItem>
         </NavList>
+        <CajaLog className="carrito">
+          <Icono className="user" icon={faCartShopping} />
+          Carrito
+          {/* <TextoSingle>Login</TextoSingle> */}
+        </CajaLog>
         <CajaLog>
           <Icono className="user" icon={faUser} />
           Cuenta
@@ -153,6 +158,7 @@ const NavItem = styled.li`
   }
 `;
 const CajaLog = styled.div`
+  margin-right: 5px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -162,5 +168,8 @@ const CajaLog = styled.div`
   &:hover {
     color: ${Theme.primary.azulSuave};
     text-decoration: underline;
+  }
+  &.carrito {
+    border: none;
   }
 `;
