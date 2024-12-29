@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import Hero from "../components/Hero";
+import Hero from "./Partes01Home/Hero";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BarraMensaje from "../components/BarraMensaje";
@@ -8,6 +8,8 @@ import Categorias from "../components/Categorias";
 import Theme from "../config/Theme";
 import Articulos from "../components/Articulos";
 import ImagenBigSection from "../components/ImagenBigSection";
+import CarrucelMarcas from "./Partes01Home/CarrucelMarcas";
+import Registrarse from "../components/Registrarse";
 
 export default function Home() {
   return (
@@ -16,7 +18,7 @@ export default function Home() {
         <Header home={true} />
         <Hero />
       </WrapHero>
-      <Seccion>
+      <Seccion className="sinMargin sinPadding">
         <BarraMensaje texto="En Sara Pet Shop encontrarás lo que necesitas… y lo que no sabías que querías." />
       </Seccion>
       <Seccion className="padding">
@@ -34,6 +36,16 @@ export default function Home() {
         <TituloSeccion>Mas vendidos</TituloSeccion>
         <Articulos tipo={"masVendidos"} />
       </Seccion>
+      <Seccion className=" bgWhite">
+        <TituloSeccion>Nuestras marcas</TituloSeccion>
+        <CarrucelMarcas />
+        <CarrucelMarcas invertido={true} />
+      </Seccion>
+      <Seccion className=" bgWhite">
+        <TituloSeccion>Forma parte</TituloSeccion>
+        <Registrarse />
+      </Seccion>
+      <Seccion className="probando"></Seccion>
     </Container>
   );
 }
@@ -47,20 +59,34 @@ const WrapHero = styled.div`
   /* flex-direction: column; */
 `;
 const Seccion = styled.div`
-  margin-bottom: 70px;
+  /* margin-bottom: 150px; */
+  padding-top: 100px;
+  padding-bottom: 100px;
   &.padding {
-    padding: 0 ${Theme.config.paddingLateral};
+    padding-left: ${Theme.config.paddingLateral};
+    padding-right: ${Theme.config.paddingLateral};
   }
   &.bgWhite {
     background-color: white;
-    min-height: 400px;
+    /* min-height: 400px; */
     align-content: center;
+  }
+  &.sinMargin {
+    margin: 0;
+  }
+  &.sinPadding {
+    padding: 0;
+  }
+  &.probando {
+    width: 100%;
+    background-color: red;
+    height: 200px;
   }
 `;
 const TituloSeccion = styled.h2`
   width: 100%;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   font-size: 2rem;
   color: ${Theme.secondary.azulBrillante};
   text-decoration: underline;
