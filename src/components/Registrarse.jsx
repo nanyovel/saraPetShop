@@ -12,11 +12,19 @@ export default function Registrarse() {
           <InputSimple />
         </CajaInput>
         <CajaInput>
+          <TituloInput>Apellido</TituloInput>
+          <InputSimple />
+        </CajaInput>
+        <CajaInput>
           <TituloInput>Telefono</TituloInput>
           <InputSimple />
         </CajaInput>
         <CajaInput>
           <TituloInput>Correo</TituloInput>
+          <InputSimple />
+        </CajaInput>
+        <CajaInput>
+          <TituloInput>Contraseña</TituloInput>
           <InputSimple />
         </CajaInput>
         <BtnSimple>Aceptar</BtnSimple>

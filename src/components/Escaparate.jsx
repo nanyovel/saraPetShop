@@ -72,7 +72,7 @@ export default function Escaparate() {
           rutaImg: items[numeroAux].rutaImg,
         });
         mover(false);
-      }, 1000);
+      }, 500);
     }, 7000);
   }, []);
   return (

@@ -24,7 +24,7 @@ export default function Articulo({ imagenes }) {
 }
 
 const CajaImg = styled.div`
-  width: 100%;
+  width: 99%;
   height: 100%;
   position: relative;
   /* transition: all 0.3s ease; */

@@ -30,7 +30,6 @@ export default function CarrucelMarcas({ invertido }) {
 const Container = styled.div`
   /* overflow: hidden; */
   width: 100%;
-  background-color: ${Theme.neutral.blancoHueso};
   display: flex;
   align-items: center;
   height: 150px;
@@ -63,6 +62,8 @@ const Logo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: ${Theme.config.sombra};
+
   img {
     max-width: 100%;
     max-height: 100%;

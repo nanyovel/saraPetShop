@@ -39,11 +39,11 @@ const CajaCategorias = styled.div`
   cursor: pointer;
   transition: ease 0.2s all;
   &:hover {
-    box-shadow: 3px 7px 11px 0px #a8dadc;
     transform: scale(1.1);
     border-radius: 10px;
     /* -moz-box-shadow: 3px 7px 11px 0px rgba(177, 54, 54, 0.75); */
     /* -webkit-box-shadow: 3px 7px 11px 0px rgba(177, 54, 54, 0.75); */
+    box-shadow: ${Theme.config.sombraAzul1};
   }
 `;
 const CajaImg = styled.div`

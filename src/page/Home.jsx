@@ -11,6 +11,8 @@ import ImagenBigSection from "../components/ImagenBigSection";
 import CarrucelMarcas from "./Partes01Home/CarrucelMarcas";
 import Registrarse from "../components/Registrarse";
 import Footer from "../components/Footer";
+import Servicios from "../components/Servicios";
+// import { NavLink } from "react-router";
 
 export default function Home() {
   return (
@@ -26,37 +28,92 @@ export default function Home() {
         <TituloSeccion>Categorias</TituloSeccion>
         <Categorias />
       </Seccion>
+      <Seccion className=" bgRed">
+        <TituloSeccion className="white">Servicios</TituloSeccion>
+        <Servicios />
+      </Seccion>
       <Seccion className="padding bgWhite">
-        <TituloSeccion>En ofertas</TituloSeccion>
-        <Articulos tipo={"ofertas"} />
+        <TituloSeccion>Alimentos</TituloSeccion>
+        <WrapBarraProductos>
+          <CajaBarraNegraSeccion className="top">
+            <TituloBarra>Alimentos para perros:</TituloBarra>
+          </CajaBarraNegraSeccion>
+          <Articulos tipo={"ofertas"} />
+          <CajaBarraNegraSeccion className="bottom">
+            <TextoVerMas>Ver todos...</TextoVerMas>
+          </CajaBarraNegraSeccion>
+        </WrapBarraProductos>
+        <WrapBarraProductos>
+          <CajaBarraNegraSeccion className="top">
+            <TituloBarra>Alimentos para gatos:</TituloBarra>
+          </CajaBarraNegraSeccion>
+          <Articulos tipo={"ofertas"} />
+          <CajaBarraNegraSeccion className="bottom">
+            <TextoVerMas>Ver todos...</TextoVerMas>
+          </CajaBarraNegraSeccion>
+        </WrapBarraProductos>
+        <WrapBarraProductos>
+          <CajaBarraNegraSeccion className="top">
+            <TituloBarra>Otros alimentos:</TituloBarra>
+          </CajaBarraNegraSeccion>
+          <Articulos tipo={"ofertas"} />
+          <CajaBarraNegraSeccion className="bottom">
+            <TextoVerMas>Ver mas...</TextoVerMas>
+          </CajaBarraNegraSeccion>
+        </WrapBarraProductos>
       </Seccion>
       <Seccion>
         <ImagenBigSection />
       </Seccion>
-      <Seccion className=" bgWhite">
-        <TituloSeccion>Mas vendidos</TituloSeccion>
-        <Articulos tipo={"masVendidos"} />
+      <Seccion className="padding bgWhite">
+        <TituloSeccion>Mascotas</TituloSeccion>
+        <WrapBarraProductos>
+          <CajaBarraNegraSeccion className="top">
+            <TituloBarra>Perros:</TituloBarra>
+          </CajaBarraNegraSeccion>
+          <Articulos tipo={"ofertas"} />
+          <CajaBarraNegraSeccion className="bottom">
+            <TextoVerMas>Ver todo...</TextoVerMas>
+          </CajaBarraNegraSeccion>
+        </WrapBarraProductos>
+
+        <WrapBarraProductos>
+          <CajaBarraNegraSeccion className="top">
+            <TituloBarra>Peces:</TituloBarra>
+          </CajaBarraNegraSeccion>
+          <Articulos tipo={"ofertas"} />
+          <CajaBarraNegraSeccion className="bottom">
+            <TextoVerMas>Ver todo...</TextoVerMas>
+          </CajaBarraNegraSeccion>
+        </WrapBarraProductos>
+        <WrapBarraProductos>
+          <CajaBarraNegraSeccion className="top">
+            <TituloBarra>Otras mascotas:</TituloBarra>
+          </CajaBarraNegraSeccion>
+          <Articulos tipo={"ofertas"} />
+          <CajaBarraNegraSeccion className="bottom">
+            <TextoVerMas>Ver todo...</TextoVerMas>
+          </CajaBarraNegraSeccion>
+        </WrapBarraProductos>
       </Seccion>
-      <Seccion className=" bgWhite">
-        <TituloSeccion>Nuestras marcas</TituloSeccion>
+
+      <Seccion className=" bgRed2">
+        <TituloSeccion className="white">Nuestras marcas</TituloSeccion>
         <CarrucelMarcas />
         <CarrucelMarcas invertido={true} />
       </Seccion>
       <Seccion className=" bgWhite">
         <TituloSeccion>Forma parte</TituloSeccion>
-        <SubtituloSeccion>
-          Aprovecha descuentos en todos los productos y otros beneficios.
-        </SubtituloSeccion>
+        <CajaBarraNegraSeccion className="">
+          <TextoVerMas className="padding">
+            Registrate y aprovecha descuentos en todos los productos y otros
+            beneficios.
+          </TextoVerMas>
+        </CajaBarraNegraSeccion>
         <Registrarse />
+        <CajaBarraNegraSeccion className=""></CajaBarraNegraSeccion>
       </Seccion>
-      <Seccion className=" bgWhite">
-        <TituloSeccion>En liquidacion</TituloSeccion>
-        <Articulos tipo={"masVendidos"} />
-      </Seccion>
-      <Seccion className=" bgWhite">
-        <TituloSeccion>5 estrellas</TituloSeccion>
-        <Articulos tipo={"masVendidos"} />
-      </Seccion>
+
       <Footer />
     </Container>
   );
@@ -66,12 +123,8 @@ const Container = styled.div``;
 const WrapHero = styled.div`
   position: relative;
   width: 100vw;
-  /* border: 2px solid black; */
-  /* display: flex; */
-  /* flex-direction: column; */
 `;
 const Seccion = styled.div`
-  /* margin-bottom: 150px; */
   padding-top: 100px;
   padding-bottom: 100px;
   &.padding {
@@ -80,7 +133,6 @@ const Seccion = styled.div`
   }
   &.bgWhite {
     background-color: white;
-    /* min-height: 400px; */
     align-content: center;
   }
   &.sinMargin {
@@ -89,28 +141,70 @@ const Seccion = styled.div`
   &.sinPadding {
     padding: 0;
   }
-  &.probando {
+  &.bgRed {
     width: 100%;
-    background-color: red;
-    height: 200px;
+    background-color: ${Theme.primary.rojoTenue};
+    min-height: 200px;
+  }
+  &.bgRed2 {
+    width: 100%;
+    background-color: ${Theme.primary.rojoTenue};
+    min-height: 200px;
   }
 `;
 const TituloSeccion = styled.h2`
   width: 100%;
   text-align: center;
   margin-bottom: 20px;
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: ${Theme.secondary.azulBrillante};
   text-decoration: underline;
+  &.white {
+    color: white;
+    text-align: center;
+  }
 `;
 const SubtituloSeccion = styled.h3`
   width: 100%;
-  text-align: center;
-  color: ${Theme.neutral.neutral600};
+  text-align: start;
+  color: ${Theme.primary.rojoCalido};
   font-size: 2rem;
   margin-bottom: 30px;
+  padding: 15px;
 `;
-const WrapHeaderHero = styled.div`
-  height: 100vh;
-`;
+
 const Icono = styled(FontAwesomeIcon)``;
+const WrapBarraProductos = styled.div`
+  border-top: 5px solid ${Theme.primary.rojoBrillante};
+  border-bottom: 5px solid ${Theme.primary.rojoBrillante};
+  margin-bottom: 100px;
+  background-color: ${Theme.neutral.blancoHueso};
+`;
+const CajaBarraNegraSeccion = styled.div`
+  width: 100%;
+  background-color: black;
+  min-height: 50px;
+  color: ${Theme.primary.rojoBrillante};
+  padding: 8px;
+  &.top {
+    margin-bottom: 80px;
+  }
+  &.bottom {
+    margin-top: 80px;
+    display: flex;
+    justify-content: end;
+  }
+`;
+const TituloBarra = styled.h2`
+  font-size: 1.8rem;
+`;
+const TextoVerMas = styled.p`
+  font-size: 1.5rem;
+  &.padding {
+    padding-left: 15px;
+  }
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;

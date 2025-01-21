@@ -91,7 +91,6 @@ const NavBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  /* color: ${Theme.secondary.azulTenue}; */
   color: ${Theme.primary.rojoBrillante};
 `;
 const Img = styled.img`
@@ -112,9 +111,7 @@ const Icono = styled(FontAwesomeIcon)`
   &.user {
     &:hover {
       cursor: pointer;
-      /* color: ${Theme.primary.rojoBrillante}; */
       color: ${Theme.primary.azulSuave};
-      /* color: red; */
     }
   }
 `;
@@ -122,7 +119,6 @@ const Icono = styled(FontAwesomeIcon)`
 const TextoTel = styled.h2`
   font-size: 1.1rem;
   font-weight: normal;
-  /* color: #fff; */
   &:hover {
     color: ${Theme.primary.azulSuave};
     text-decoration: underline;
