@@ -89,7 +89,9 @@ const TituloSara = styled.h1`
   color: ${Theme.primary.rojoBrillante};
 `;
 const SubTituloSara = styled.h2`
-  color: ${Theme.neutral.neutral600};
+  color: white;
+  font-weight: 400;
+
   width: 100%;
   text-align: center;
   font-size: 1.2rem;
@@ -112,6 +114,7 @@ const Img = styled.img`
 `;
 const Lista = styled.ul`
   color: ${Theme.neutral.neutral600};
+  color: white;
   /* border: 1px solid white; */
   width: 100%;
   padding-left: 30px;

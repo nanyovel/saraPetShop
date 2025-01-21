@@ -105,7 +105,7 @@ export default function Home() {
       <Seccion className=" bgWhite">
         <TituloSeccion>Forma parte</TituloSeccion>
         <CajaBarraNegraSeccion className="">
-          <TextoVerMas className="padding">
+          <TextoVerMas className="registrate">
             Registrate y aprovecha descuentos en todos los productos y otros
             beneficios.
           </TextoVerMas>
@@ -200,8 +200,12 @@ const TituloBarra = styled.h2`
 `;
 const TextoVerMas = styled.p`
   font-size: 1.5rem;
-  &.padding {
+  &.registrate {
     padding-left: 15px;
+    &:hover {
+      cursor: auto;
+      text-decoration: none;
+    }
   }
   &:hover {
     cursor: pointer;

@@ -12,9 +12,7 @@ export default function ImagenBigSection() {
           texto={" Todo para tu mascotas, menos excusas para no consentirlas."}
         />
       </CajaBarra>
-      <CajaImg>
-        <Img src={ImgPerro} />
-      </CajaImg>
+      <CajaImg>{/* <Img src={ImgPerro} /> */}</CajaImg>
       <CajaBarra>
         <BarraMensaje
           texto={
@@ -40,9 +38,17 @@ const Texto = styled.h2`
 const CajaImg = styled.div`
   width: 100%;
   height: auto;
+  height: 80vh;
   margin-bottom: -4px;
+  background-image: url("./../../public/img/animales/perro4.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 const Img = styled.img`
   width: 100%;
   margin: 0%;
+  height: 90vh;
+  top: 0;
+  position: fixed;
 `;
