@@ -6,6 +6,7 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import { faCartShopping, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router";
 
 export default function Header({ home }) {
   return (
@@ -18,11 +19,11 @@ export default function Header({ home }) {
           <TextoTel className="tel">
             <Ancla
               target="_blank"
-              href="https://api.whatsapp.com/send?phone=+18099732098&text=Hola%20equipo%20BreakKoi,%20quisiera%20por%20favor%20ser%20asistido."
+              href="https://api.whatsapp.com/send?phone=+18093757647&text=Hola%20equipo%20BreakKoi,%20quisiera%20por%20favor%20ser%20asistido."
             >
               <Icono icon={faWhatsapp} />
               <SpanTel>Tel:</SpanTel>
-              809-973-2098
+              809-375-7647
             </Ancla>
           </TextoTel>
           <TextoTel className="tel">
@@ -39,12 +40,22 @@ export default function Header({ home }) {
       </CajaLogoTel>
       <NavBar>
         <NavList>
-          <NavItem>Home</NavItem>
-          <NavItem>Mascotas</NavItem>
-          <NavItem>Accesorios</NavItem>
-          <NavItem>Alimentos</NavItem>
-          <NavItem>Ofertas</NavItem>
-          <NavItem>Contactos</NavItem>
+          <NavItem>
+            <Enlace to={"/"}>Home</Enlace>
+          </NavItem>
+          <NavItem>
+            <Enlace to={"/mascotas"}>Mascotas</Enlace>
+          </NavItem>
+          <NavItem>
+            <Enlace to={"/accesorios"}>Accesorios</Enlace>
+          </NavItem>
+          <NavItem>
+            <Enlace to={"/alimentos"}>Alimentos</Enlace>
+          </NavItem>
+
+          <NavItem>
+            <Enlace to={"/contacto"}>Contacto</Enlace>
+          </NavItem>
         </NavList>
         <CajaLog className="carrito">
           <Icono className="user" icon={faCartShopping} />
@@ -64,11 +75,9 @@ export default function Header({ home }) {
 const Container = styled.header`
   width: 100vw;
   height: 90px;
-  /* background-color: ${Theme.primary.rojoCalido}; */
-  /* color: ${Theme.neutral.blancoHueso}; */
-  /* background-color: #ee3b1f8f; */
   background-color: black;
   color: ${Theme.primary.rojoBrillante};
+  color: white;
   z-index: 2;
   padding: 1px ${Theme.config.paddingLateral};
   &.home {
@@ -91,7 +100,8 @@ const NavBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  color: ${Theme.primary.rojoBrillante};
+  /* color: ${Theme.primary.rojoBrillante}; */
+  color: #fff;
 `;
 const Img = styled.img`
   width: 80px;
@@ -134,6 +144,10 @@ const Ancla = styled.a`
     text-decoration: underline;
   }
 `;
+const Enlace = styled(Link)`
+  color: inherit;
+  text-decoration: inherit;
+`;
 const SpanTel = styled.span``;
 const NavList = styled.ul`
   display: flex;
@@ -158,7 +172,8 @@ const CajaLog = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  border: 1px solid ${Theme.primary.rojoBrillante};
+  /* border: 1px solid ${Theme.primary.rojoBrillante}; */
+  border: 1px solid #fff;
   padding: 4px;
   &:hover {
     color: ${Theme.primary.azulSuave};

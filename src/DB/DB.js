@@ -3,6 +3,8 @@ import ImgCat from "./../../public/img/animales/cat2.jpg";
 import ImgPez from "./../../public/img/animales/pez1.jpg";
 import ImgBird from "./../../public/img/animales/bird1.jpg";
 import ImgPlato from "./../../public/img/animales/plato1.avif";
+import ImgLizard from "./../../public/img/animales/lizard.jpg";
+import ImgOtros from "./../../public/img/animales/conejo.jpg";
 
 export const ArticulosLista = [
   {
@@ -208,7 +210,11 @@ export const CategoriasLista = [
     urlPortada: ImgBird,
   },
   {
-    nombre: "Accesorios",
-    urlPortada: ImgPlato,
+    nombre: "Reptiles",
+    urlPortada: ImgLizard,
+  },
+  {
+    nombre: "Otros",
+    urlPortada: ImgOtros,
   },
 ];

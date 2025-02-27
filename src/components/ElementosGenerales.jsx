@@ -38,10 +38,24 @@ export const InputGeneral = styled.input`
   border-radius: 4px;
   padding: 5px;
   background-color: ${Theme.neutral.blancoHueso};
-
-  /* width: 200px; */
   min-width: 180px;
+  width: 100%;
   &:focus {
-    border: 1px solid ${Theme.secondary.azulBrillante};
+    /* border: 1px solid ${Theme.secondary.azulBrillante}; */
+  }
+`;
+export const TextAreaGeneral = styled.textarea`
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #000;
+  outline: none;
+  padding: 10px;
+  background-color: ${Theme.neutral.blancoHueso};
+  min-height: 80px;
+  resize: vertical;
+  font-family: Arial, sans-serif;
+
+  &:focus {
+    /* border: 1px solid ${Theme.secondary.azulBrillante}; */
   }
 `;

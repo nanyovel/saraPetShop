@@ -6,6 +6,8 @@ import Img2 from "./../../public/img/fondo/koi7.jpg";
 import Img3 from "./../../public/img/fondo/koi8.jpg";
 import Img4 from "./../../public/img/fondo/koi10.jpg";
 import Img5 from "./../../public/img/fondo/koi11.jpg";
+// import Img6 from "./../../public/img/fondo/goldenPerro.jpg";
+import Img7 from "./../../public/img/fondo/shitzuPerro.jpg";
 import { BotonGeneral } from "./ElementosGenerales";
 
 export default function Desvanecer() {
@@ -13,8 +15,8 @@ export default function Desvanecer() {
     {
       titulo: "Sara Pet Shop",
       subTitulo:
-        "Tenemos cualquier tipo de mascota que necesites, todos necesitamos el amor de una.",
-      rutaImg: Img1,
+        "¡Dale a tu mejor amigo un refugio cómodo y seguro! 🐶💚 Encuentra la caja perfecta para su descanso feliz.",
+      rutaImg: Img7,
     },
     {
       titulo: "Sara Pet Shop",
@@ -75,7 +77,7 @@ export default function Desvanecer() {
 
           <CajaTexto $isActive={index === activeIndex}>
             <WrapLogoNombre>
-              <Titulo1>Sara Pet Shop</Titulo1>
+              <Titulo1>Sara PetShop</Titulo1>
             </WrapLogoNombre>
             <WrapSubtitulo>
               <SubTitulo>{foto.subTitulo}</SubTitulo>
@@ -106,6 +108,7 @@ const Imagen = styled.img`
   width: 100%;
   height: 100%;
   transition: opacity 1.5s ease-in-out;
+  object-fit: cover;
 `;
 
 // Cristal opaco
@@ -153,7 +156,7 @@ const WrapLogoNombre = styled.div`
 
 const Titulo1 = styled.h1`
   font-size: 4rem;
-  font-weight: 200;
+  /* font-weight: 200; */
   color: white;
 `;
 const WrapSubtitulo = styled.div`

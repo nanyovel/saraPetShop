@@ -8,6 +8,7 @@ import {
   faLinkedin,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router";
 
 export default function Footer() {
   return (
@@ -22,25 +23,34 @@ export default function Footer() {
       </Columna>
 
       <Columna>
-        <Titulo>Sobre Sara Pet Shop</Titulo>
-        <Lista>
-          <Item>¿Quienes somos?</Item>
-          <Item>¿Porque elegirnos?</Item>
-          <Item>¿Que dicen nuestros clientes?</Item>
-          <Item>Sara Pet Shop solidario con animales callejeros</Item>
-          <Item>Codigo etico de Sara Pet Shop</Item>
-        </Lista>
-      </Columna>
-
-      <Columna>
         <Titulo>Enlaces de interes</Titulo>
         <Lista>
-          <Item>Contactos</Item>
-          <Item>Donde encontrarnos</Item>
-          <Item>Seguimientos a pedidos</Item>
-          <Item>Registrate</Item>
-          <Item>Preguntas frecuentes</Item>
-          <Item>Devoluciones</Item>
+          <Item>
+            <Enlace to={"/nosotros"}>¿Quienes somos?</Enlace>
+          </Item>
+
+          <Item>
+            <Enlace to={"/contacto"}>Contacto</Enlace>
+          </Item>
+
+          <Item>
+            <Enlace to={"registro"}>Registrarte</Enlace>
+          </Item>
+          <Item>
+            <Enlace to={"login"}>Iniciar Sesion</Enlace>
+          </Item>
+          <Item>
+            <Enlace to={"recuperar"}>Olvide mi contraseña</Enlace>
+          </Item>
+          <Item>
+            <Enlace>Seguimientos a pedidos</Enlace>
+          </Item>
+          <Item>
+            <Enlace>Devoluciones</Enlace>
+          </Item>
+          <Item>
+            <Enlace>Preguntas frecuentes</Enlace>
+          </Item>
         </Lista>
         <Titulo>Redes sociales</Titulo>
         <CajaRRSS>
@@ -74,7 +84,7 @@ const Container = styled.footer`
   gap: 15px;
 `;
 const Columna = styled.section`
-  width: 25%;
+  width: 30%;
   /* border-left: 2px solid ${Theme.primary.rojoBrillante}; */
   border-right: 2px solid ${Theme.primary.rojoBrillante};
   display: flex;
@@ -161,4 +171,8 @@ const Icono = styled(FontAwesomeIcon)`
     background-color: ${Theme.neutral.neutral300};
     color: ${Theme.neutral.neutral600};
   }
+`;
+const Enlace = styled(Link)`
+  color: inherit;
+  text-decoration: inherit;
 `;

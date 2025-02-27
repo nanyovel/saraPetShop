@@ -12,6 +12,8 @@ import CarrucelMarcas from "./Partes01Home/CarrucelMarcas";
 import Registrarse from "../components/Registrarse";
 import Footer from "../components/Footer";
 import Servicios from "../components/Servicios";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Stats from "./Partes01Home/Stats";
 // import { NavLink } from "react-router";
 
 export default function Home() {
@@ -28,39 +30,29 @@ export default function Home() {
         <TituloSeccion>Categorias</TituloSeccion>
         <Categorias />
       </Seccion>
-      <Seccion className=" bgRed">
-        <TituloSeccion className="white">Servicios</TituloSeccion>
-        <Servicios />
-      </Seccion>
+
       <Seccion className="padding bgWhite">
         <TituloSeccion>Alimentos</TituloSeccion>
         <WrapBarraProductos>
           <CajaBarraNegraSeccion className="top">
-            <TituloBarra>Alimentos para perros:</TituloBarra>
+            <TituloBarra>
+              Alimentos para cualquier tipo de mascotas.
+            </TituloBarra>
           </CajaBarraNegraSeccion>
           <Articulos tipo={"ofertas"} />
-          <CajaBarraNegraSeccion className="bottom">
-            <TextoVerMas>Ver todos...</TextoVerMas>
-          </CajaBarraNegraSeccion>
+          <CajaVerMas>
+            <TextoVerMas>
+              Ver todos
+              <Icono className="marginLeft" icon={faArrowRight} />
+            </TextoVerMas>
+          </CajaVerMas>
+          <CajaBarraNegraSeccion className="bottom"></CajaBarraNegraSeccion>
         </WrapBarraProductos>
-        <WrapBarraProductos>
-          <CajaBarraNegraSeccion className="top">
-            <TituloBarra>Alimentos para gatos:</TituloBarra>
-          </CajaBarraNegraSeccion>
-          <Articulos tipo={"ofertas"} />
-          <CajaBarraNegraSeccion className="bottom">
-            <TextoVerMas>Ver todos...</TextoVerMas>
-          </CajaBarraNegraSeccion>
-        </WrapBarraProductos>
-        <WrapBarraProductos>
-          <CajaBarraNegraSeccion className="top">
-            <TituloBarra>Otros alimentos:</TituloBarra>
-          </CajaBarraNegraSeccion>
-          <Articulos tipo={"ofertas"} />
-          <CajaBarraNegraSeccion className="bottom">
-            <TextoVerMas>Ver mas...</TextoVerMas>
-          </CajaBarraNegraSeccion>
-        </WrapBarraProductos>
+      </Seccion>
+
+      <Seccion className=" bgRed">
+        <TituloSeccion className="white">Servicios</TituloSeccion>
+        <Servicios />
       </Seccion>
       <Seccion>
         <ImagenBigSection />
@@ -69,31 +61,16 @@ export default function Home() {
         <TituloSeccion>Mascotas</TituloSeccion>
         <WrapBarraProductos>
           <CajaBarraNegraSeccion className="top">
-            <TituloBarra>Perros:</TituloBarra>
+            <TituloBarra>Tenemos todo tipo de mascotas</TituloBarra>
           </CajaBarraNegraSeccion>
           <Articulos tipo={"ofertas"} />
-          <CajaBarraNegraSeccion className="bottom">
-            <TextoVerMas>Ver todo...</TextoVerMas>
-          </CajaBarraNegraSeccion>
-        </WrapBarraProductos>
-
-        <WrapBarraProductos>
-          <CajaBarraNegraSeccion className="top">
-            <TituloBarra>Peces:</TituloBarra>
-          </CajaBarraNegraSeccion>
-          <Articulos tipo={"ofertas"} />
-          <CajaBarraNegraSeccion className="bottom">
-            <TextoVerMas>Ver todo...</TextoVerMas>
-          </CajaBarraNegraSeccion>
-        </WrapBarraProductos>
-        <WrapBarraProductos>
-          <CajaBarraNegraSeccion className="top">
-            <TituloBarra>Otras mascotas:</TituloBarra>
-          </CajaBarraNegraSeccion>
-          <Articulos tipo={"ofertas"} />
-          <CajaBarraNegraSeccion className="bottom">
-            <TextoVerMas>Ver todo...</TextoVerMas>
-          </CajaBarraNegraSeccion>
+          <CajaVerMas>
+            <TextoVerMas>
+              Ver todos
+              <Icono className="marginLeft" icon={faArrowRight} />
+            </TextoVerMas>
+          </CajaVerMas>
+          <CajaBarraNegraSeccion className="bottom"></CajaBarraNegraSeccion>
         </WrapBarraProductos>
       </Seccion>
 
@@ -102,7 +79,11 @@ export default function Home() {
         <CarrucelMarcas />
         <CarrucelMarcas invertido={true} />
       </Seccion>
-      <Seccion className=" bgWhite">
+      <Seccion>
+        <Stats />
+      </Seccion>
+
+      {/* <Seccion className=" bgWhite">
         <TituloSeccion>Forma parte</TituloSeccion>
         <CajaBarraNegraSeccion className="">
           <TextoVerMas className="registrate">
@@ -111,8 +92,7 @@ export default function Home() {
           </TextoVerMas>
         </CajaBarraNegraSeccion>
         <Registrarse />
-        <CajaBarraNegraSeccion className=""></CajaBarraNegraSeccion>
-      </Seccion>
+      </Seccion> */}
 
       <Footer />
     </Container>
@@ -150,6 +130,7 @@ const Seccion = styled.div`
     width: 100%;
     background-color: ${Theme.primary.rojoTenue};
     min-height: 200px;
+    margin-bottom: 20px;
   }
 `;
 const TituloSeccion = styled.h2`
@@ -173,7 +154,11 @@ const SubtituloSeccion = styled.h3`
   padding: 15px;
 `;
 
-const Icono = styled(FontAwesomeIcon)``;
+const Icono = styled(FontAwesomeIcon)`
+  &.marginLeft {
+    margin-left: 10px;
+  }
+`;
 const WrapBarraProductos = styled.div`
   border-top: 5px solid ${Theme.primary.rojoBrillante};
   border-bottom: 5px solid ${Theme.primary.rojoBrillante};
@@ -187,19 +172,37 @@ const CajaBarraNegraSeccion = styled.div`
   color: ${Theme.primary.rojoBrillante};
   padding: 8px;
   &.top {
-    margin-bottom: 80px;
+    margin-bottom: 50px;
   }
   &.bottom {
-    margin-top: 80px;
+    margin-top: 50px;
     display: flex;
     justify-content: end;
   }
 `;
 const TituloBarra = styled.h2`
   font-size: 1.8rem;
+  color: white;
+`;
+const CajaVerMas = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  text-align: end;
+  margin-top: 20px;
+  /* min-height: 100px; */
 `;
 const TextoVerMas = styled.p`
-  font-size: 1.5rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: 150px;
+  width: 120px;
+  text-align: center;
+  vertical-align: center;
+  align-content: center;
+  height: 40px;
+  background-color: black;
+  margin-right: 10px;
   &.registrate {
     padding-left: 15px;
     &:hover {
