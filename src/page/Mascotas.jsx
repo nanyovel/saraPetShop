@@ -44,8 +44,7 @@ const ContainerContenido = styled.div``;
 const CajaImgHero = styled.div`
   width: 100%;
   height: 500px;
-  background-image: url("public/pets.jpg");
-  background-image: url("./../../public/img/animales/pets.jpg");
+  background-image: url("/img/animales/pets.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 70px;

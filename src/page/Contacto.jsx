@@ -101,8 +101,7 @@ const ContainerContenido = styled.div``;
 const CajaImgHero = styled.div`
   width: 100%;
   height: 500px;
-  background-image: url("public/pets.jpg");
-  background-image: url("./../../public/img/animales/dog-7866708_1280.jpg");
+  background-image: url("/img/animales/dog-7866708_1280.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 70px;

@@ -34,13 +34,13 @@ export default function Footer() {
           </Item>
 
           <Item>
-            <Enlace to={"registro"}>Registrarte</Enlace>
+            <Enlace to={"/registro"}>Registrarte</Enlace>
           </Item>
           <Item>
-            <Enlace to={"login"}>Iniciar Sesion</Enlace>
+            <Enlace to={"/login"}>Iniciar Sesion</Enlace>
           </Item>
           <Item>
-            <Enlace to={"recuperar"}>Olvide mi contraseña</Enlace>
+            <Enlace to={"/recuperar"}>Olvide mi contraseña</Enlace>
           </Item>
           <Item>
             <Enlace>Seguimientos a pedidos</Enlace>

@@ -40,7 +40,7 @@ const CajaImg = styled.div`
   height: auto;
   height: 80vh;
   margin-bottom: -4px;
-  background-image: url("./../../public/img/animales/perro4.jpg");
+  background-image: url("/img/animales/perro4.jpg");
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;

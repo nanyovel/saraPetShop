@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Theme from "../config/Theme";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import TituloPage from "../components/TituloPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router";
@@ -20,21 +19,28 @@ export default function ResetPassword() {
   return (
     <>
       <Header />
-
-      <CajaContenido>
-        <TituloPage titulo="Reestablecer contraseña" />
-        <Subtitulo>
+      <ContainerContenido>
+        <CajaImgHero>
+          <CajaFrosting>
+            <Titulo>Recuperar contraseña</Titulo>
+          </CajaFrosting>
+        </CajaImgHero>
+      </ContainerContenido>
+      <CajaTextoWeSend>
+        <TextoWeSend>
           Enviaremos un enlace a tu correo de reestablecimiento de contraseña.
-        </Subtitulo>
+        </TextoWeSend>
+      </CajaTextoWeSend>
+      <CajaContenido>
         <form onSubmit={(e) => handleSubmit(e)}>
           <WrapInputs>
             <CajaInput>
-              <TituloInput>Correo electronico</TituloInput>
+              <TituloInput>Correo</TituloInput>
               <Input
                 value={datos.correo}
                 onChange={(e) => handleInputs(e)}
                 name="correo"
-                placeholder="Correo electronico"
+                placeholder="Email"
                 type="text"
               />
             </CajaInput>
@@ -58,13 +64,6 @@ export default function ResetPassword() {
     </>
   );
 }
-const Subtitulo = styled.h2`
-  width: 100%;
-  text-align: center;
-  margin-bottom: 40px;
-  color: ${Theme.primary.azulProfundo};
-  text-decoration: underline;
-`;
 
 const CajaContenido = styled.div`
   min-height: 200px;
@@ -75,7 +74,6 @@ const WrapInputs = styled.div`
   min-height: 200px;
   width: 400px;
   margin: auto;
-  /* border: 1px solid ${Theme.secondary.azulBrillante}; */
   border-radius: 10px;
   padding: 15px;
   -moz-box-shadow: 3px 7px 11px 0px rgba(0, 0, 0, 0.75);
@@ -114,14 +112,15 @@ const Enlaces = styled(Link)`
   transition: color 25ms;
   border-bottom: 3px solid transparent;
   &:hover {
-    color: ${Theme.neutral.neutral500};
+    color: ${Theme.neutral.neutral300};
+    color: black;
     border-bottom: 3px solid;
   }
 
   text-decoration: none;
 `;
 const TituloInput = styled.p`
-  color: ${Theme.neutral.neutral650};
+  color: ${Theme.primary.rojoBrillante};
 `;
 const Input2 = styled.input`
   width: 100%;
@@ -131,7 +130,7 @@ const Input2 = styled.input`
   outline: none;
   padding: 10px;
   color: ${Theme.secondary.azulBrillante};
-  background-color: ${Theme.complementary.terracotaSuave};
+  background-color: ${Theme.secondary.azulMarino};
   input::placeholder {
     color: gray; /* Cambia el color del placeholder */
     opacity: 1; /* Asegura que el color se vea bien en algunos navegadores */
@@ -153,7 +152,7 @@ const CajaEye = styled.div`
 `;
 
 const IconoEye = styled(FontAwesomeIcon)`
-  color: ${Theme.primary.mostazaDorado};
+  color: inherit;
   cursor: pointer;
 `;
 const CajaInternaInput = styled.div`
@@ -170,4 +169,41 @@ const Parrafo = styled.p`
   &.danger {
     color: red;
   }
+`;
+const Titulo = styled.h1`
+  width: 100%;
+  text-align: center;
+  font-size: 5rem;
+  color: white;
+`;
+
+const ContainerContenido = styled.div``;
+const CajaImgHero = styled.div`
+  width: 100%;
+  height: 500px;
+  background-image: url("/img/animales/lizard-4763351_1280.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 70px;
+  background-position: center;
+  position: relative;
+`;
+const CajaFrosting = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #921a1a7e;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+`;
+const CajaTextoWeSend = styled.div`
+  width: 100%;
+`;
+const TextoWeSend = styled.h3`
+  text-align: center;
+  color: ${Theme.primary.rojoBrillante};
+  text-decoration: underline;
+  margin-bottom: 20px;
 `;

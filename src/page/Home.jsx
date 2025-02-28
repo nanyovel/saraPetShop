@@ -9,7 +9,6 @@ import Theme from "../config/Theme";
 import Articulos from "../components/Articulos";
 import ImagenBigSection from "../components/ImagenBigSection";
 import CarrucelMarcas from "./Partes01Home/CarrucelMarcas";
-import Registrarse from "../components/Registrarse";
 import Footer from "../components/Footer";
 import Servicios from "../components/Servicios";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -82,17 +81,6 @@ export default function Home() {
       <Seccion>
         <Stats />
       </Seccion>
-
-      {/* <Seccion className=" bgWhite">
-        <TituloSeccion>Forma parte</TituloSeccion>
-        <CajaBarraNegraSeccion className="">
-          <TextoVerMas className="registrate">
-            Registrate y aprovecha descuentos en todos los productos y otros
-            beneficios.
-          </TextoVerMas>
-        </CajaBarraNegraSeccion>
-        <Registrarse />
-      </Seccion> */}
 
       <Footer />
     </Container>

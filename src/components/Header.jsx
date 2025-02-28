@@ -64,7 +64,8 @@ export default function Header({ home }) {
         </CajaLog>
         <CajaLog>
           <Icono className="user" icon={faUser} />
-          Cuenta
+          <Enlace to={"/login"}>Iniciar Sesion</Enlace>
+
           {/* <TextoSingle>Login</TextoSingle> */}
         </CajaLog>
       </NavBar>

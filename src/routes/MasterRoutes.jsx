@@ -6,6 +6,9 @@ import Accesorios from "../page/Accesorios";
 import Alimentos from "../page/Alimentos";
 import Nosotros from "../page/Nosotros";
 import Contacto from "../page/Contacto";
+import Login from "../auth/Login";
+import Registrarse from "../auth/Registrarse";
+import ResetPassword from "../auth/ResetPassword";
 
 export default function MasterRoutes() {
   return (
@@ -16,6 +19,9 @@ export default function MasterRoutes() {
       <Route path="/alimentos" element={<Alimentos />} />
       <Route path="/nosotros" element={<Nosotros />} />
       <Route path="/contacto" element={<Contacto />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/registro" element={<Registrarse />} />
+      <Route path="/recuperar" element={<ResetPassword />} />
     </Routes>
   );
 }
