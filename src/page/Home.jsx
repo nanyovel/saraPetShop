@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import Hero from "./Partes01Home/Hero";
 import styled from "styled-components";
@@ -13,23 +13,30 @@ import Footer from "../components/Footer";
 import Servicios from "../components/Servicios";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Stats from "./Partes01Home/Stats";
-// import { NavLink } from "react-router";
+import { getAuth } from "firebase/auth";
+import CajaConfirmarEmail from "../components/CajaConfirmarEmail";
+import { useNavigate } from "react-router";
 
-export default function Home() {
+export default function Home({ userMaster }) {
+  const navegacion = useNavigate();
+  const auth = getAuth();
+  auth.languageCode = "es";
+  const usuario = auth.currentUser;
+
   return (
     <Container>
+      {!usuario?.emailVerified && location !== "/" && <CajaConfirmarEmail />}
       <WrapHero>
-        <Header home={true} />
+        <Header home={true} userMaster={userMaster} />
         <Hero />
       </WrapHero>
       <Seccion className="sinMargin sinPadding">
-        <BarraMensaje texto="En Sara Pet Shop encontrarás lo que necesitas… y lo que no sabías que querías." />
+        <BarraMensaje texto="En Sara Pet Shop encontrarás hasta lo que no sabías que querías." />
       </Seccion>
       <Seccion className="padding">
         <TituloSeccion>Categorias</TituloSeccion>
         <Categorias />
       </Seccion>
-
       <Seccion className="padding bgWhite">
         <TituloSeccion>Alimentos</TituloSeccion>
         <WrapBarraProductos>
@@ -48,7 +55,6 @@ export default function Home() {
           <CajaBarraNegraSeccion className="bottom"></CajaBarraNegraSeccion>
         </WrapBarraProductos>
       </Seccion>
-
       <Seccion className=" bgRed">
         <TituloSeccion className="white">Servicios</TituloSeccion>
         <Servicios />
@@ -72,16 +78,17 @@ export default function Home() {
           <CajaBarraNegraSeccion className="bottom"></CajaBarraNegraSeccion>
         </WrapBarraProductos>
       </Seccion>
-
+      {/*  */}
+      {/*  */}
+      {/*  */}
       <Seccion className=" bgRed2">
         <TituloSeccion className="white">Nuestras marcas</TituloSeccion>
         <CarrucelMarcas />
         <CarrucelMarcas invertido={true} />
-      </Seccion>
+      </Seccion>{" "}
       <Seccion>
         <Stats />
       </Seccion>
-
       <Footer />
     </Container>
   );
@@ -98,6 +105,18 @@ const Seccion = styled.div`
   &.padding {
     padding-left: ${Theme.config.paddingLateral};
     padding-right: ${Theme.config.paddingLateral};
+    @media screen and (max-width: 1200px) {
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+    @media screen and (max-width: 1000px) {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    @media screen and (max-width: 900px) {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
   }
   &.bgWhite {
     background-color: white;
@@ -203,3 +222,29 @@ const TextoVerMas = styled.p`
     text-decoration: underline;
   }
 `;
+
+const CajaEmailNoVerfied = styled.div`
+  width: 100%;
+  min-height: 50px;
+  background-color: ${Theme.primary.azulSuave};
+  border: 1px solid ${Theme.secondary.coralCalido};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 8px;
+`;
+const TextoEmailVerified = styled.p`
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: ${Theme.primary.rojoBrillante};
+  text-decoration: underline;
+  &.parrafo {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: ${Theme.secondary.azulBrillante};
+    width: 60%;
+  }
+`;
+const Span = styled.span``;

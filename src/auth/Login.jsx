@@ -1,83 +1,172 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Theme from "../config/Theme";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { BotonGeneral, InputGeneral } from "../components/ElementosGenerales";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import BotonQuery from "../components/BotonQuery";
+import { autenticar } from "../firebase/firebaseConfig";
+import CajaNotificacion from "../components/CajaNotificacion";
+import { ModalLoading } from "../components/ModalLoading";
 
-export default function Login() {
-  const handleSubmit = () => {};
-  const handleInputs = () => {};
-  const [datos, setDatos] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [mensajeAlerta, setMensajeAlerta] = useState("");
-  const [hasAlerta, setHasAlerta] = useState(false);
+export default function Login({ userMaster }) {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
-  return (
-    <>
-      <Header />
-      <ContainerContenido>
-        <CajaImgHero>
-          <CajaFrosting>
-            <Titulo>Iniciar Sesion</Titulo>
-          </CajaFrosting>
-        </CajaImgHero>
-      </ContainerContenido>
-      <CajaContenido>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <WrapInputs>
-            <CajaInput>
-              <TituloInput>Correo</TituloInput>
-              <Input
-                value={datos.correo}
-                onChange={(e) => handleInputs(e)}
-                name="correo"
-                placeholder="Email"
-                type="text"
-              />
-            </CajaInput>
-            <CajaInput>
-              <TituloInput>Contraseña</TituloInput>
-              <CajaInternaInput>
-                <Input
-                  value={datos.password}
-                  onChange={(e) => handleInputs(e)}
-                  name="password"
-                  placeholder="Contraseña"
-                  type={showPassword ? "text" : "password"}
-                />
-                <CajaEye>
-                  <IconoEye
-                    icon={showPassword ? faEyeSlash : faEye}
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                </CajaEye>
-              </CajaInternaInput>
-            </CajaInput>
-            {hasAlerta && (
-              <CajaErrorAlEnviar>
-                <Parrafo className="danger">{mensajeAlerta}</Parrafo>
-              </CajaErrorAlEnviar>
-            )}
+  const auth = getAuth();
+  auth.languageCode = "es";
+  const [autenticado, setAunteticado] = useState(false);
+  const [datosParseados, setDatosParseados] = useState(false);
+  const [dispatchAlerta, setDispatchAlerta] = useState(false);
+  const [mensajeAlerta, setMensajeAlerta] = useState("");
+  const [tipoAlerta, setTipoAlerta] = useState("");
 
-            <CajaInput className="btn">
-              <BtnSimple type="submit" onClick={() => handleSubmit()}>
-                Iniciar sesion
-              </BtnSimple>
-            </CajaInput>
-            <CajaInput className="links">
-              <Enlaces to={"/registro"}>Registrarse</Enlaces>
-              <Enlaces to={"/recuperar"}>Olvide mi contraseña</Enlaces>
-            </CajaInput>
-          </WrapInputs>
-        </form>
-        {isLoading && <ModalLoading />}
-      </CajaContenido>
-      <Footer />
-    </>
+  useEffect(() => {
+    let continuarAqui = true;
+    setAunteticado(true);
+    if (auth.currentUser?.emailVerified == true) {
+      continuarAqui = false;
+      navigate("/");
+    } else if (auth.currentUser?.emailVerified == false) {
+      continuarAqui = false;
+      navigate("/perfil");
+    }
+    if (continuarAqui) {
+      setDatosParseados(true);
+    }
+  }, [auth.currentUser, navigate]);
+
+  const initialDatos = {
+    correo: "",
+    password: "",
+  };
+  const [datos, setDatos] = useState({
+    ...initialDatos,
+  });
+
+  const handleInputs = (e) => {
+    const { name, value } = e.target;
+    setDatos({
+      ...datos,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Si existe algun campo vacio
+    let correoParsed = datos.correo.replace(" ", "");
+    if (correoParsed == "" || datos.password == "") {
+      setMensajeAlerta("Llena todos los campos.");
+      setTipoAlerta("error");
+      setDispatchAlerta(true);
+      return;
+    }
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(
+        autenticar,
+        correoParsed,
+        datos.password
+      );
+      navigate("/");
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      switch (error.code) {
+        case "auth/invalid-credential":
+          setMensajeAlerta("Datos incorrectos.");
+          setTipoAlerta("error");
+          setDispatchAlerta(true);
+          break;
+        case "auth/invalid-email":
+          setMensajeAlerta("Email no existe.");
+          setTipoAlerta("error");
+          setDispatchAlerta(true);
+          break;
+        default:
+          setMensajeAlerta("Error con la base de datos");
+          setTipoAlerta("error");
+          setDispatchAlerta(true);
+          break;
+      }
+      setIsLoading(false);
+    }
+  };
+  const [showPassword, setShowPassword] = useState(false);
+  const [hasAlerta, setHasAlerta] = useState(false);
+  return (
+    datosParseados && (
+      <>
+        <Header userMaster={userMaster} />
+        <BotonQuery datos={datos} />
+        <ContainerContenido>
+          <CajaImgHero>
+            <CajaFrosting>
+              <Titulo>Iniciar Sesion</Titulo>
+            </CajaFrosting>
+          </CajaImgHero>
+        </ContainerContenido>
+        <CajaContenido>
+          {dispatchAlerta && (
+            <CajaNotificacion tipo={tipoAlerta} texto={mensajeAlerta} />
+          )}
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <WrapInputs>
+              <CajaInput>
+                <TituloInput>Correo</TituloInput>
+                <Input
+                  value={datos.correo}
+                  onChange={(e) => handleInputs(e)}
+                  name="correo"
+                  placeholder="Email"
+                  type="text"
+                />
+              </CajaInput>
+              <CajaInput>
+                <TituloInput>Contraseña</TituloInput>
+                <CajaInternaInput>
+                  <Input
+                    value={datos.password}
+                    onChange={(e) => handleInputs(e)}
+                    name="password"
+                    placeholder="Contraseña"
+                    type={showPassword ? "text" : "password"}
+                  />
+                  <CajaEye>
+                    <IconoEye
+                      icon={showPassword ? faEyeSlash : faEye}
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  </CajaEye>
+                </CajaInternaInput>
+              </CajaInput>
+              {hasAlerta && (
+                <CajaErrorAlEnviar>
+                  <Parrafo className="danger">{mensajeAlerta}</Parrafo>
+                </CajaErrorAlEnviar>
+              )}
+
+              <CajaInput className="btn">
+                <BtnSimple type="submit" onClick={(e) => handleSubmit(e)}>
+                  Iniciar sesion
+                </BtnSimple>
+              </CajaInput>
+              <CajaInput className="links">
+                <Enlaces to={"/registro"}>Registrarse</Enlaces>
+                <Enlaces to={"/recuperar"}>Olvide mi contraseña</Enlaces>
+              </CajaInput>
+            </WrapInputs>
+          </form>
+          {isLoading && <ModalLoading completa={true} />}
+        </CajaContenido>
+        <Footer />
+      </>
+    )
   );
 }
 

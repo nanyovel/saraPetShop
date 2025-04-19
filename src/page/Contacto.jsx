@@ -16,10 +16,11 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import FormContact from "../components/FormContact";
-export default function Contacto() {
+import { Link } from "react-router";
+export default function Contacto({ userMaster }) {
   return (
     <>
-      <Header />
+      <Header userMaster={userMaster} />
       <ContainerContenido>
         <CajaImgHero>
           <CajaFrosting>
@@ -40,11 +41,11 @@ export default function Contacto() {
               <Cajita>
                 <CajaNumeros>
                   <Icono icon={faWhatsapp} />
-                  <Numeros>829-986-9760</Numeros>
+                  <Numeros>809-973-2098</Numeros>
                 </CajaNumeros>
                 <CajaNumeros>
                   <Icono icon={faWhatsapp} />
-                  <Numeros>829-341-9890</Numeros>
+                  <Numeros>809-375-7647</Numeros>
                 </CajaNumeros>
               </Cajita>
             </WrapContact>
@@ -53,10 +54,20 @@ export default function Contacto() {
                 <Titulito>Redes Sociales:</Titulito>
               </CajaTitulito>
               <CajaRRSS>
-                <Icono icon={faYoutube} />
-                <Icono icon={faInstagram} />
-                <Icono icon={faLinkedin} />
-                <Icono icon={faFacebook} />
+                <Enlace to={"https://www.instagram.com/sarapetshoprd/"}>
+                  <Icono icon={faInstagram} />
+                </Enlace>
+
+                <Enlace to={"https://www.facebook.com/VentaKoi"}>
+                  <Icono icon={faFacebook} />
+                </Enlace>
+                <Enlace
+                  to={
+                    "https://api.whatsapp.com/send?phone=+18099732098&text=Hola,%20quisiera%20por%20favor%20ser%20asistido."
+                  }
+                >
+                  <Icono icon={faWhatsapp} />
+                </Enlace>
               </CajaRRSS>
             </WrapContact>
             <WrapContact>
@@ -65,8 +76,7 @@ export default function Contacto() {
               </CajaTitulito>
               <Cajita>
                 <Parrafo>
-                  Av. Coronel Juan Maria Lora Fernandez N° 17, frente a Plaza
-                  Lama
+                  Calle Salvador Espinal N° 13 Frente a Plaza Monaco.
                 </Parrafo>
               </Cajita>
             </WrapContact>
@@ -227,3 +237,4 @@ const Img = styled.img`
   border-radius: 6px;
 `;
 const Parrafo = styled.p``;
+const Enlace = styled(Link)``;

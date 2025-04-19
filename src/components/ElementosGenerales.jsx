@@ -36,12 +36,13 @@ export const InputGeneral = styled.input`
   outline: none;
   height: 30px;
   border-radius: 4px;
+  color: ${Theme.secondary.azulBrillante};
   padding: 5px;
   background-color: ${Theme.neutral.blancoHueso};
   min-width: 180px;
   width: 100%;
   &:focus {
-    /* border: 1px solid ${Theme.secondary.azulBrillante}; */
+    border: 1px solid ${Theme.primary.rojoBrillante};
   }
 `;
 export const TextAreaGeneral = styled.textarea`
@@ -57,5 +58,35 @@ export const TextAreaGeneral = styled.textarea`
 
   &:focus {
     /* border: 1px solid ${Theme.secondary.azulBrillante}; */
+  }
+`;
+
+export const MenuDesplegable = styled.select`
+  outline: none;
+  border: 1px solid transparent;
+  height: 30px;
+  width: 100%;
+  padding: 5px;
+  /* margin-bottom: 1px; */
+  border-radius: 4px;
+
+  &:focus {
+  }
+
+  &.disabled {
+    color: black;
+  }
+`;
+
+export const Opciones = styled.option`
+  border: none;
+
+  color: white;
+
+  &:focus {
+    border: 1px solid white;
+  }
+  &:disabled {
+    color: black;
   }
 `;

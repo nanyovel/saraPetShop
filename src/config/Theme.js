@@ -18,6 +18,18 @@ const Theme = {
     neutral300: "#EEEEEE",
     arenaSand: "#f3e5ab",
   },
+  complementary: {
+    narajanBrillante: "#F78C6B",
+    success: "#28a745",
+    warning: "#ffc107",
+    warningClear: "#fcd40a",
+    warningAmarillo: "#ebff3b",
+    edicionYellow: "#b9a603",
+    danger: "#dc3545",
+    azulStatic: "#0074d9",
+    azulEnlace: "#0645ad",
+    info: "#178192",
+  },
   config: {
     paddingLateral: "150px",
     sombra: "3px 7px 11px 0px rgba(0, 0, 0, 0.75)",

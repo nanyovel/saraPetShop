@@ -6,10 +6,10 @@ import Footer from "../components/Footer";
 import ImgPets from "./../../public/img/animales/pets.jpg";
 import SeccionVenta from "../components/SeccionVenta";
 
-export default function Mascotas() {
+export default function Mascotas({ userMaster }) {
   return (
     <>
-      <Header />
+      <Header userMaster={userMaster} />
       <ContainerContenido>
         <CajaImgHero>
           <CajaFrosting>

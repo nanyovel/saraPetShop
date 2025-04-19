@@ -6,6 +6,7 @@ import {
   faFacebook,
   faInstagram,
   faLinkedin,
+  faWhatsapp,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router";
@@ -42,22 +43,23 @@ export default function Footer() {
           <Item>
             <Enlace to={"/recuperar"}>Olvide mi contraseña</Enlace>
           </Item>
-          <Item>
-            <Enlace>Seguimientos a pedidos</Enlace>
-          </Item>
-          <Item>
-            <Enlace>Devoluciones</Enlace>
-          </Item>
-          <Item>
-            <Enlace>Preguntas frecuentes</Enlace>
-          </Item>
         </Lista>
         <Titulo>Redes sociales</Titulo>
         <CajaRRSS>
-          <Icono icon={faYoutube} />
-          <Icono icon={faInstagram} />
-          <Icono icon={faLinkedin} />
-          <Icono icon={faFacebook} />
+          <Enlace to={"https://www.instagram.com/sarapetshoprd/"}>
+            <Icono icon={faInstagram} />
+          </Enlace>
+
+          <Enlace to={"https://www.facebook.com/VentaKoi"}>
+            <Icono icon={faFacebook} />
+          </Enlace>
+          <Enlace
+            to={
+              "https://api.whatsapp.com/send?phone=+18099732098&text=Hola,%20quisiera%20por%20favor%20ser%20asistido."
+            }
+          >
+            <Icono icon={faWhatsapp} />
+          </Enlace>
         </CajaRRSS>
       </Columna>
 

@@ -6,35 +6,27 @@ import Footer from "../components/Footer";
 import ImgPets from "./../../public/img/animales/pets.jpg";
 import SeccionVenta from "../components/SeccionVenta";
 
-export default function Alimentos({ userMaster }) {
+export default function GatosCat({ userMaster }) {
   return (
     <>
       <Header userMaster={userMaster} />
       <ContainerContenido>
         <CajaImgHero>
           <CajaFrosting>
-            <Titulo>Alimentos</Titulo>
+            <Titulo>Perros</Titulo>
           </CajaFrosting>
         </CajaImgHero>
       </ContainerContenido>
       <Seccion className="padding">
-        <SeccionVenta titulo={"Alimentos para perros"} />
+        <SeccionVenta btnMasDisabled={true} />
       </Seccion>
       <Seccion className="padding">
-        <SeccionVenta titulo={"Alimentos para Gatos"} />
+        <SeccionVenta btnMasDisabled={true} />
       </Seccion>
       <Seccion className="padding">
-        <SeccionVenta titulo={"Alimentos para Peces"} />
+        <SeccionVenta btnMasDisabled={true} />
       </Seccion>
-      <Seccion className="padding">
-        <SeccionVenta titulo={"Alimentos para Aves"} />
-      </Seccion>
-      <Seccion className="padding">
-        <SeccionVenta titulo={"Alimentos para Reptiles"} />
-      </Seccion>
-      <Seccion className="padding">
-        <SeccionVenta titulo={"Otros"} />
-      </Seccion>
+
       <Footer />
     </>
   );
@@ -44,7 +36,7 @@ const ContainerContenido = styled.div``;
 const CajaImgHero = styled.div`
   width: 100%;
   height: 500px;
-  background-image: url("/img/animales/dry-dog-food-7336506_1280.jpg");
+  background-image: url("/img/animales/perrosMuch.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 70px;

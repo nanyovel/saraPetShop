@@ -16,10 +16,10 @@ import {
   faLinkedin,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-export default function Nosotros() {
+export default function Nosotros({ userMaster }) {
   return (
     <>
-      <Header />
+      <Header userMaster={userMaster} />
       <ContainerContenido>
         <CajaImgHero>
           <CajaFrosting>

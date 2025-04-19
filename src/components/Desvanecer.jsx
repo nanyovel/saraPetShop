@@ -94,7 +94,7 @@ export default function Desvanecer() {
 const Container = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: red;
+  background-color: #7f2c2c93;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -130,7 +130,7 @@ const Frosting = styled.div`
 
 const CajaTexto = styled.div`
   width: 400px;
-  min-height: 100px;
+  min-height: 200px;
   /* background-color: blue; */
   position: absolute;
   top: ${(props) => (props.$isActive ? "400px" : "250px")};
@@ -143,6 +143,13 @@ const CajaTexto = styled.div`
   border-radius: 5px;
   box-shadow: ${Theme.config.sombra};
   z-index: 100;
+  @media screen and (max-width: 580px) {
+    width: 80%;
+    left: 20px;
+    min-height: 200px;
+    padding: 5px;
+    height: 200px;
+  }
 `;
 const WrapLogoNombre = styled.div`
   width: 100%;
@@ -158,6 +165,9 @@ const Titulo1 = styled.h1`
   font-size: 4rem;
   /* font-weight: 200; */
   color: white;
+  @media screen and (max-width: 580px) {
+    font-size: 2rem;
+  }
 `;
 const WrapSubtitulo = styled.div`
   width: 100%;
@@ -169,6 +179,9 @@ const SubTitulo = styled.h2`
   text-align: center;
   color: white;
   font-weight: 400;
+  @media screen and (max-width: 580px) {
+    font-size: 1.2rem;
+  }
 `;
 const CajaBtn = styled.div`
   width: 100%;

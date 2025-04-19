@@ -54,7 +54,7 @@ export default function Articulos({ tipo }) {
                 <Titulo className="parrafo">{item.textoCopy}</Titulo>
               </CajitaDetalles>
               <CajitaDetalles>
-                <BtnSimple>Añadir al carrito</BtnSimple>
+                <BtnSimple>Comprar</BtnSimple>
               </CajitaDetalles>
             </CajaDetalles>
           </Wrap>

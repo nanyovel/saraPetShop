@@ -5,21 +5,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Articulos from "./Articulos";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-export default function SeccionVenta({ titulo, subtitulo }) {
+export default function SeccionVenta({ titulo, subtitulo, btnMasDisabled }) {
   return (
     <Container>
-      <TituloSeccion>{titulo}</TituloSeccion>
+      {titulo && <TituloSeccion>{titulo}</TituloSeccion>}
       <WrapBarraProductos>
         <CajaBarraNegraSeccion className="top">
           <TituloBarra>{subtitulo}</TituloBarra>
         </CajaBarraNegraSeccion>
         <Articulos tipo={"ofertas"} />
-        <CajaVerMas>
-          <TextoVerMas>
-            Ver todos
-            <Icono className="marginLeft" icon={faArrowRight} />
-          </TextoVerMas>
-        </CajaVerMas>
+        {!btnMasDisabled && (
+          <CajaVerMas>
+            <TextoVerMas>
+              Ver todos
+              <Icono className="marginLeft" icon={faArrowRight} />
+            </TextoVerMas>
+          </CajaVerMas>
+        )}
         <CajaBarraNegraSeccion className="bottom"></CajaBarraNegraSeccion>
       </WrapBarraProductos>
     </Container>

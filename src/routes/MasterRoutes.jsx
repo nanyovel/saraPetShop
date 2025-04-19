@@ -9,19 +9,45 @@ import Contacto from "../page/Contacto";
 import Login from "../auth/Login";
 import Registrarse from "../auth/Registrarse";
 import ResetPassword from "../auth/ResetPassword";
+import CategoriasRoutes from "./CategoriasRoutes";
+import { Perfil } from "../page/Perfil";
+import Page404 from "../page/Page404";
+import Dashboard from "../page/Dashboard";
 
-export default function MasterRoutes() {
+export default function MasterRoutes({ userMaster }) {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/mascotas" element={<Mascotas />} />
-      <Route path="/accesorios" element={<Accesorios />} />
-      <Route path="/alimentos" element={<Alimentos />} />
-      <Route path="/nosotros" element={<Nosotros />} />
+      <Route path="/" element={<Home userMaster={userMaster} />} />
+      <Route path="/mascotas" element={<Mascotas userMaster={userMaster} />} />
+      <Route
+        path="/accesorios"
+        element={<Accesorios userMaster={userMaster} />}
+      />
+      <Route
+        path="/alimentos"
+        element={<Alimentos userMaster={userMaster} />}
+      />
+      <Route path="/nosotros" element={<Nosotros userMaster={userMaster} />} />
       <Route path="/contacto" element={<Contacto />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/registro" element={<Registrarse />} />
-      <Route path="/recuperar" element={<ResetPassword />} />
+      <Route path="/login" element={<Login userMaster={userMaster} />} />
+      <Route
+        path="/registro"
+        element={<Registrarse userMaster={userMaster} />}
+      />
+      <Route
+        path="/recuperar"
+        element={<ResetPassword userMaster={userMaster} />}
+      />
+      <Route
+        path="/categorias/*"
+        element={<CategoriasRoutes userMaster={userMaster} />}
+      />
+      <Route
+        path="/dashboard"
+        element={<Dashboard userMaster={userMaster} />}
+      />
+      <Route path="/perfil" element={<Perfil userMaster={userMaster} />} />
+      <Route path="*" element={<Page404 userMaster={userMaster} />} />
     </Routes>
   );
 }

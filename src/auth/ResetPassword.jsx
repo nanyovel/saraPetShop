@@ -7,18 +7,77 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router";
 import { BotonGeneral, InputGeneral } from "../components/ElementosGenerales";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import CajaNotificacion from "../components/CajaNotificacion";
 
-export default function ResetPassword() {
-  const handleSubmit = () => {};
-  const handleInputs = () => {};
-  const [datos, setDatos] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [mensajeAlerta, setMensajeAlerta] = useState("");
+export default function ResetPassword({ userMaste }) {
+  const [correo, setCorreo] = useState("");
   const [hasAlerta, setHasAlerta] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [dispatchAlerta, setDispatchAlerta] = useState(false);
+  const [mensajeAlerta, setMensajeAlerta] = useState("");
+  const [tipoAlerta, setTipoAlerta] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setDispatchAlerta(false);
+    if (correo == "") {
+      setMensajeAlerta("Colocar correo.");
+      setTipoAlerta("warning");
+      setDispatchAlerta(true);
+      return "";
+    }
+    try {
+      await sendPasswordResetEmail(auth, correo);
+      setMensajeAlerta("Enlace enviado.");
+      setTipoAlerta("success");
+      setDispatchAlerta(true);
+      setCorreo("");
+    } catch (error) {
+      console.log(error);
+
+      switch (error.code) {
+        case "auth/invalid-email":
+          setMensajeAlerta("No existe cuenta registrada con este email.");
+          setTipoAlerta("error");
+          setDispatchAlerta(true);
+          break;
+
+        default:
+          setMensajeAlerta("Error con la base de datos.");
+          setTipoAlerta("error");
+          setDispatchAlerta(true);
+          break;
+      }
+    }
+  };
+  const handleInputs = (e) => {
+    setCorreo(e.target.value);
+  };
+
+  // Reiniciar cuando el usuario tiene sesion iniciada
+  const reiniciarPass = async () => {
+    try {
+      await sendPasswordResetEmail(auth, usuario.email);
+      setMensajeAlerta("Enlace enviado.");
+      setTipoAlerta("success");
+      setDispatchAlerta(true);
+    } catch (error) {
+      console.log(error);
+      setMensajeAlerta("Error con la base de datos.");
+      setTipoAlerta("error");
+      setDispatchAlerta(true);
+    }
+  };
+
+  // ******************** ENVIANDO A LA BASE DE DATOS******************** //
+  const auth = getAuth();
+  auth.languageCode = "es";
+  const usuario = auth.currentUser;
   return (
     <>
-      <Header />
+      <Header userMaster={userMaster} />
       <ContainerContenido>
         <CajaImgHero>
           <CajaFrosting>
@@ -26,45 +85,65 @@ export default function ResetPassword() {
           </CajaFrosting>
         </CajaImgHero>
       </ContainerContenido>
-      <CajaTextoWeSend>
-        <TextoWeSend>
-          Enviaremos un enlace a tu correo de reestablecimiento de contraseña.
-        </TextoWeSend>
-      </CajaTextoWeSend>
-      <CajaContenido>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <WrapInputs>
-            <CajaInput>
-              <TituloInput>Correo</TituloInput>
-              <Input
-                value={datos.correo}
-                onChange={(e) => handleInputs(e)}
-                name="correo"
-                placeholder="Email"
-                type="text"
-              />
-            </CajaInput>
+      {dispatchAlerta && (
+        <CajaNotificacion tipo={tipoAlerta} texto={mensajeAlerta} />
+      )}
+      {usuario ? (
+        <UserIniciado>
+          <CajaTexto>
+            <CajaInterna>
+              <TextoMensaje>
+                Si deseas reiniciar tu contraseña, haz click en el siguiente
+                botón y se te enviará un enlace a tu correo para restablecer.
+              </TextoMensaje>
+            </CajaInterna>
+          </CajaTexto>
+          <BtnSimple onClick={() => reiniciarPass()}>Enviar enlace</BtnSimple>
+        </UserIniciado>
+      ) : (
+        <UserNoIniciado>
+          <CajaTextoWeSend>
+            <TextoWeSend>
+              Enviaremos un enlace a tu correo de reestablecimiento de
+              contraseña.
+            </TextoWeSend>
+          </CajaTextoWeSend>
+          <CajaContenido>
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <WrapInputs>
+                <CajaInput>
+                  <TituloInput>Correo</TituloInput>
+                  <Input
+                    value={correo}
+                    onChange={(e) => handleInputs(e)}
+                    name="correo"
+                    placeholder="Email"
+                    type="text"
+                  />
+                </CajaInput>
 
-            {hasAlerta && (
-              <CajaErrorAlEnviar>
-                <Parrafo className="danger">{mensajeAlerta}</Parrafo>
-              </CajaErrorAlEnviar>
-            )}
+                {hasAlerta && (
+                  <CajaErrorAlEnviar>
+                    <Parrafo className="danger">{mensajeAlerta}</Parrafo>
+                  </CajaErrorAlEnviar>
+                )}
 
-            <CajaInput className="btn">
-              <BtnSimple type="submit" onClick={() => handleSubmit()}>
-                Enviar enlace
-              </BtnSimple>
-            </CajaInput>
-          </WrapInputs>
-        </form>
-        {isLoading && <ModalLoading />}
-      </CajaContenido>
+                <CajaInput className="btn">
+                  <BtnSimple type="submit" onClick={(e) => handleSubmit(e)}>
+                    Enviar enlace
+                  </BtnSimple>
+                </CajaInput>
+              </WrapInputs>
+            </form>
+            {isLoading && <ModalLoading />}
+          </CajaContenido>
+        </UserNoIniciado>
+      )}
       <Footer />
     </>
   );
 }
-
+const UserNoIniciado = styled.div``;
 const CajaContenido = styled.div`
   min-height: 200px;
 `;
@@ -139,6 +218,10 @@ const Input2 = styled.input`
 const Input = styled(InputGeneral)``;
 const BtnSimple = styled(BotonGeneral)`
   /* height: 40px; */
+  width: 200px;
+  height: 40px;
+  margin: auto;
+  margin-bottom: 100px;
 `;
 const CajaEye = styled.div`
   width: 10%;
@@ -206,4 +289,30 @@ const TextoWeSend = styled.h3`
   color: ${Theme.primary.rojoBrillante};
   text-decoration: underline;
   margin-bottom: 20px;
+`;
+const CajaTexto = styled.div`
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px 0 10px 0;
+`;
+const UserIniciado = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const CajaInterna = styled.div`
+  padding: 10px;
+  min-height: 100px;
+  margin-bottom: 25px;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const TextoMensaje = styled.h3`
+  color: white;
+  font-weight: 400;
+  font-size: 1.2rem;
 `;
