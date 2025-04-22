@@ -68,7 +68,10 @@ export const MenuDesplegable = styled.select`
   width: 100%;
   padding: 5px;
   /* margin-bottom: 1px; */
+  background-color: ${Theme.neutral.blancoHueso};
+  border: 1px solid ${Theme.neutral.neutral600};
   border-radius: 4px;
+  color: ${Theme.secondary.azulBrillante};
 
   &:focus {
   }
@@ -80,8 +83,6 @@ export const MenuDesplegable = styled.select`
 
 export const Opciones = styled.option`
   border: none;
-
-  color: white;
 
   &:focus {
     border: 1px solid white;

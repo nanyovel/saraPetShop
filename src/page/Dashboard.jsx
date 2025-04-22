@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -14,10 +14,23 @@ import {
   TablaGroup,
 } from "../components/GrupoTabla";
 import { Link } from "react-router";
-import { ArticulosDB } from "../DB/DB";
+import { useDocByCondition } from "../libs/firebaseLibs";
+import { BotonGeneral } from "../components/ElementosGenerales";
+import { cargarDatos } from "../libs/runLoteFirebase";
 import { itemSchema } from "../schema/itemSchema";
+import { ArticulosDBOficial } from "../DB/DB";
 
 export default function Dashboard({ userMaster }) {
+  const [articulosDB, setArticulosDB] = useState([]);
+  const [articulosDBSort, setArticulosDBSort] = useState([]);
+  useDocByCondition("articulos", setArticulosDB);
+  useEffect(() => {
+    const newArray = articulosDB.sort(
+      (a, b) => Number(a.codigo) - Number(b.codigo)
+    );
+    console.log(articulosDB);
+    setArticulosDBSort(newArray);
+  }, [articulosDB]);
   const [arrayOpciones, setArrayOpciones] = useState([
     {
       select: true,
@@ -40,7 +53,7 @@ export default function Dashboard({ userMaster }) {
       }))
     );
   };
-  const ArticulosDBParsed = ArticulosDB.map((item) => {
+  const articulosParsed = ArticulosDBOficial.map((item) => {
     return {
       ...itemSchema,
       ...item,
@@ -50,6 +63,9 @@ export default function Dashboard({ userMaster }) {
     <>
       <Header userMaster={userMaster} />
       <HeroMedium titulo="Dashboard" imgBg={ImgBird} />
+      <BotonGeneral onClick={() => cargarDatos(articulosParsed, "articulos")}>
+        Cargar
+      </BotonGeneral>
       <Contenedor>
         <CajaElements>
           <MenuPestannias
@@ -72,9 +88,10 @@ export default function Dashboard({ userMaster }) {
                   </Fila>
                 </thead>
                 <tbody>
-                  {ArticulosDBParsed.map((item, index) => {
+                  {articulosDBSort.map((item, index) => {
                     return (
                       <Fila
+                        key={index}
                         className={`body
                         ${index % 2 ? "impar" : "par"}
                         
@@ -82,7 +99,9 @@ export default function Dashboard({ userMaster }) {
                       >
                         <CeldaBody>{index + 1}</CeldaBody>
                         <CeldaBody>
-                          <Enlace>{item.codigo}</Enlace>
+                          <Enlace to={"/articulos/" + item.codigo}>
+                            {item.codigo}
+                          </Enlace>
                         </CeldaBody>
                         <CeldaBody className="text-start">
                           {item.descripcion}

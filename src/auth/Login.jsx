@@ -12,6 +12,7 @@ import BotonQuery from "../components/BotonQuery";
 import { autenticar } from "../firebase/firebaseConfig";
 import CajaNotificacion from "../components/CajaNotificacion";
 import { ModalLoading } from "../components/ModalLoading";
+import HeroMedium from "../components/HeroMedium";
 
 export default function Login({ userMaster }) {
   const navigate = useNavigate();
@@ -103,14 +104,11 @@ export default function Login({ userMaster }) {
     datosParseados && (
       <>
         <Header userMaster={userMaster} />
-        <BotonQuery datos={datos} />
-        <ContainerContenido>
-          <CajaImgHero>
-            <CajaFrosting>
-              <Titulo>Iniciar Sesion</Titulo>
-            </CajaFrosting>
-          </CajaImgHero>
-        </ContainerContenido>
+
+        <HeroMedium
+          imgBg={"/img/animales/cat-468232_640.jpg"}
+          titulo={"Iniciar sesion"}
+        />
         <CajaContenido>
           {dispatchAlerta && (
             <CajaNotificacion tipo={tipoAlerta} texto={mensajeAlerta} />
@@ -286,7 +284,7 @@ const ContainerContenido = styled.div``;
 const CajaImgHero = styled.div`
   width: 100%;
   height: 500px;
-  background-image: url("/img/animales/cat-468232_640.jpg");
+  background-image: url("kj");
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 70px;

@@ -52,13 +52,13 @@ export default function Header({ home, userMaster }) {
               <Enlace to={"/"}>Home</Enlace>
             </NavItem>
             <NavItem>
-              <Enlace to={"/mascotas"}>Mascotas</Enlace>
+              <Enlace to={"/subCategorias/mascotas"}>Mascotas</Enlace>
             </NavItem>
             <NavItem>
-              <Enlace to={"/accesorios"}>Accesorios</Enlace>
+              <Enlace to={"/subCategorias/accesorios"}>Accesorios</Enlace>
             </NavItem>
             <NavItem>
-              <Enlace to={"/alimentos"}>Alimentos</Enlace>
+              <Enlace to={"/subCategorias/alimentos"}>Alimentos</Enlace>
             </NavItem>
 
             <NavItem>

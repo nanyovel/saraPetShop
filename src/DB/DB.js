@@ -194,38 +194,71 @@ export const ArticulosLista = [
 
 export const CategoriasLista = [
   {
-    nombre: "Perros",
-    urlPortada: ImgPerro,
-    link: "/categorias/perros",
-  },
-  {
     nombre: "Gatos",
+    key: "gatos",
     urlPortada: ImgCat,
     link: "/categorias/gatos",
   },
   {
+    nombre: "Perros",
+    key: "perros",
+    urlPortada: ImgPerro,
+    link: "/categorias/perros",
+  },
+  {
     nombre: "Peces",
+    key: "peces",
     urlPortada: ImgPez,
     link: "/categorias/peces",
   },
   {
     nombre: "Aves",
+    key: "aves",
     urlPortada: ImgBird,
     link: "/categorias/aves",
   },
   {
     nombre: "Reptiles",
+    key: "reptiles",
     urlPortada: ImgLizard,
     link: "/categorias/reptiles",
   },
   {
     nombre: "Otros",
+    key: "otros",
     urlPortada: ImgOtros,
     link: "/categorias/otros",
   },
 ];
 
-export const ArticulosDB = [
+export const subCategorias = [
+  {
+    nombre: "Mascotas",
+    key: "mascotas",
+    urlPortada: ImgOtros,
+    link: "/subCategoria/mascotas",
+  },
+  {
+    nombre: "Alimentos",
+    key: "alimentos",
+    urlPortada: ImgOtros,
+    link: "/subCategoria/alimentos",
+  },
+  {
+    nombre: "Accesorios",
+    key: "accesorios",
+    urlPortada: ImgOtros,
+    link: "/subCategoria/accesorios",
+  },
+  {
+    nombre: "Salud/Higiene",
+    key: "saludHigiene",
+    urlPortada: ImgOtros,
+    link: "/subCategoria/saludHigiene",
+  },
+];
+
+export const ArticulosDBOficial = [
   {
     codigo: "1001",
     descripcion: "Purina para perro adulto Royal Canin x-small 1.5KG",

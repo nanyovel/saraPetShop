@@ -13,22 +13,27 @@ import CategoriasRoutes from "./CategoriasRoutes";
 import { Perfil } from "../page/Perfil";
 import Page404 from "../page/Page404";
 import Dashboard from "../page/Dashboard";
+import Articulos from "../components/Articulos";
+import ArticulosView from "../view/ArticulosView";
 
 export default function MasterRoutes({ userMaster }) {
   return (
     <Routes>
       <Route path="/" element={<Home userMaster={userMaster} />} />
-      <Route path="/mascotas" element={<Mascotas userMaster={userMaster} />} />
       <Route
-        path="/accesorios"
+        path="/subCategorias/mascotas"
+        element={<Mascotas userMaster={userMaster} />}
+      />
+      <Route
+        path="/subCategorias/accesorios"
         element={<Accesorios userMaster={userMaster} />}
       />
       <Route
-        path="/alimentos"
+        path="/subCategorias/alimentos"
         element={<Alimentos userMaster={userMaster} />}
       />
       <Route path="/nosotros" element={<Nosotros userMaster={userMaster} />} />
-      <Route path="/contacto" element={<Contacto />} />
+      <Route path="/contacto" element={<Contacto userMaster={userMaster} />} />
       <Route path="/login" element={<Login userMaster={userMaster} />} />
       <Route
         path="/registro"
@@ -45,6 +50,10 @@ export default function MasterRoutes({ userMaster }) {
       <Route
         path="/dashboard"
         element={<Dashboard userMaster={userMaster} />}
+      />
+      <Route
+        path="/articulos/:id"
+        element={<ArticulosView userMaster={userMaster} />}
       />
       <Route path="/perfil" element={<Perfil userMaster={userMaster} />} />
       <Route path="*" element={<Page404 userMaster={userMaster} />} />

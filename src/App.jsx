@@ -12,7 +12,6 @@ import { useAuth } from "./context/AuthContext";
 export default function App() {
   // ******************** RECURSOS GENERALES ******************** //
   const romo = useAuth();
-  console.log(romo);
   const userAuth = useAuth().usuario;
   // como
   const [usuario, setUsuario] = useState(userAuth);
@@ -38,10 +37,6 @@ export default function App() {
   };
   let idUsuario = usuario?.uid ? usuario.uid : "00";
   useDocById("usuarios", setUserMaster, idUsuario);
-
-  useEffect(() => {
-    console.log(userMaster);
-  }, [userMaster]);
 
   return (
     <>
