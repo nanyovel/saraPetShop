@@ -32,6 +32,8 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import db, { storage } from "../firebase/firebaseConfig";
 import { doc, updateDoc, writeBatch } from "firebase/firestore";
 import { ModalLoading } from "../components/ModalLoading";
+import { is } from "date-fns/locale";
+import Articulos from "../components/Articulos";
 
 export default function ArticulosView({ userMaster }) {
   const param = useParams();
@@ -275,6 +277,8 @@ export default function ArticulosView({ userMaster }) {
         caracteristicas: itemEditable.caracteristicas,
         cat: itemEditable.cat,
         subCat: itemEditable.subCat,
+        precio: itemEditable.precio,
+        unidadMedida: itemEditable.unidadMedida,
       });
       const batch = writeBatch(db);
       let fotosUp = [...itemMaster.fotos];
@@ -305,6 +309,20 @@ export default function ArticulosView({ userMaster }) {
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
+    } catch (error) {
+      console.log("Error al guardar los cambios", error);
+      setIsLoading(false);
+    }
+  };
+  const desactivar = async (e) => {
+    const name = e.target.name;
+    setIsLoading(true);
+    const docRef = doc(db, "articulos", itemMaster.id);
+    try {
+      await updateDoc(docRef, {
+        isActived: name == "activar" ? true : false,
+      });
+      setIsLoading(false);
     } catch (error) {
       console.log("Error al guardar los cambios", error);
       setIsLoading(false);
@@ -343,13 +361,29 @@ export default function ArticulosView({ userMaster }) {
                   </>
                 )}
                 {itemMaster.isActived ? (
-                  <BotonGeneral>Desactivar</BotonGeneral>
+                  <BotonGeneral
+                    onClick={(e) => desactivar(e)}
+                    name="desactivar"
+                  >
+                    Desactivar
+                  </BotonGeneral>
                 ) : (
-                  <BotonGeneral>Activar</BotonGeneral>
+                  <BotonGeneral onClick={(e) => desactivar(e)} name="activar">
+                    Activar
+                  </BotonGeneral>
                 )}
               </CajaControles>
             )}
 
+            {itemMaster.isActived ? (
+              <></>
+            ) : (
+              <CajaItemDesactivado>
+                <TituloItemDesactivado>
+                  Articulo desactivado
+                </TituloItemDesactivado>
+              </CajaItemDesactivado>
+            )}
             <WrapTop>
               <CajaImagenes>
                 {!modoEdicion ? (
@@ -375,6 +409,12 @@ export default function ArticulosView({ userMaster }) {
                               onClick={(e) => quitarFoto(e)}
                             >
                               ❌
+                            </XquitarFoto>
+                            <XquitarFoto
+                              data-index={index}
+                              onClick={(e) => quitarFoto(e)}
+                            >
+                              ✅
                             </XquitarFoto>
                           </WrapItemFoto>
                         );
@@ -473,6 +513,49 @@ export default function ArticulosView({ userMaster }) {
                     )}
                   </CajaCategoria>
                 </WrapCat>
+                {!modoEdicion && (
+                  <CajaPrecio>
+                    <TituloPrecio>Precio:</TituloPrecio>
+                    <TextoPrecio>{"RD$ " + itemMaster.precio}</TextoPrecio>
+                  </CajaPrecio>
+                )}
+                {modoEdicion && (
+                  <CajaPrecio>
+                    <TituloPrecio>Precio:</TituloPrecio>
+                    <Input
+                      value={itemEditable.precio}
+                      autoComplete="off"
+                      name="precio"
+                      onChange={(e) => handleInput(e)}
+                      placeholder="Precio"
+                      type="number"
+                      min={0}
+                      step={0.01}
+                      className="small"
+                    />
+                  </CajaPrecio>
+                )}
+                {!modoEdicion && (
+                  <CajaPrecio>
+                    <TituloPrecio className="small">U/M:</TituloPrecio>
+                    <TextoPrecio className="small">
+                      {itemMaster.unidadMedida}
+                    </TextoPrecio>
+                  </CajaPrecio>
+                )}
+                {modoEdicion && (
+                  <CajaPrecio>
+                    <TituloPrecio>U/M:</TituloPrecio>
+                    <Input
+                      value={itemEditable.unidadMedida}
+                      autoComplete="off"
+                      name="unidadMedida"
+                      onChange={(e) => handleInput(e)}
+                      placeholder="Unidad de medida"
+                      className="small"
+                    />
+                  </CajaPrecio>
+                )}
                 <CajaStar>
                   <ImgEstrella src={ImgStar} />
                   <ImgEstrella src={ImgStar} />
@@ -650,7 +733,14 @@ export default function ArticulosView({ userMaster }) {
                 </CajaDetallesFinal>
               </CajaDetalles>
             </WrapTop>
-            <WrapBottom></WrapBottom>
+            <WrapBottom>
+              <ContenedorItemSimilares>
+                <TituloRelacionados>Articulos relacionados</TituloRelacionados>
+                <WrapItemsSimilares>
+                  <Articulos tipo={"ofertas"} />
+                </WrapItemsSimilares>
+              </ContenedorItemSimilares>
+            </WrapBottom>
           </ContenedorItem>
         </Container>
         <Footer />
@@ -897,4 +987,55 @@ const BtnSmall = styled(BotonGeneral)`
   color: black;
   border: 1px solid ${Theme.neutral.neutral600};
   margin: 2px;
+`;
+const CajaItemDesactivado = styled.div`
+  padding: 8px;
+  background-color: #5f5f5f;
+`;
+const TituloItemDesactivado = styled.h2`
+  color: ${Theme.neutral.neutral600};
+  color: #c4c4c4;
+  text-decoration: underline;
+  font-weight: 400;
+  margin-bottom: 6px;
+`;
+const CajaPrecio = styled.div`
+  width: 100%;
+  justify-content: center;
+  flex-direction: row;
+`;
+const TituloPrecio = styled.h2`
+  font-size: 1.2rem;
+  display: inline;
+  &.small {
+    font-size: 1rem;
+  }
+`;
+const TextoPrecio = styled.p`
+  font-size: 1.4rem;
+  color: ${Theme.secondary.azulBrillante};
+  margin-bottom: 10px;
+  display: inline;
+`;
+const ContenedorItemSimilares = styled.div`
+  width: 100%;
+  height: auto;
+  margin-bottom: 25px;
+  background-color: ${Theme.neutral.neutral300};
+  margin-top: 20px;
+  box-shadow: ${Theme.config.sombra};
+`;
+
+const TituloRelacionados = styled.h2`
+  color: ${Theme.primary.rojoBrillante};
+  text-decoration: underline;
+  /* color: red; */
+  font-size: 2.4rem;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 15px;
+`;
+const WrapItemsSimilares = styled.div`
+  width: 100%;
+  height: 80%;
 `;

@@ -1,33 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import Theme from "../config/Theme";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import ImgPets from "./../../public/img/animales/pets.jpg";
-import SeccionVenta from "../components/SeccionVenta";
+import Theme from "../../config/Theme";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import ImgReptil from "./../../../public/img/animales/reptil2.jpg";
+import SeccionVenta from "../../components/SeccionVenta";
+import HeroMedium from "../../components/HeroMedium";
 
-export default function PerrosCat({ userMaster }) {
+export default function Reptil({ userMaster }) {
   return (
     <>
       <Header userMaster={userMaster} />
-      <ContainerContenido>
-        <CajaImgHero>
-          <CajaFrosting>
-            <Titulo>Perros</Titulo>
-          </CajaFrosting>
-        </CajaImgHero>
-      </ContainerContenido>
+      <HeroMedium imgBg={ImgReptil} titulo={"Reptiles"} />
       <Seccion className="padding">
-        <SeccionVenta titulo={"Mascotas"} />
+        <SeccionVenta btnMasDisabled={true} />
       </Seccion>
       <Seccion className="padding">
-        <SeccionVenta titulo={"Alimentos"} />
+        <SeccionVenta btnMasDisabled={true} />
       </Seccion>
       <Seccion className="padding">
-        <SeccionVenta titulo={"Accesorios"} />
-      </Seccion>
-      <Seccion className="padding">
-        <SeccionVenta titulo={"Otros"} />
+        <SeccionVenta btnMasDisabled={true} />
       </Seccion>
 
       <Footer />

@@ -1,22 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import Theme from "../config/Theme";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import ImgPets from "./../../public/img/animales/pets.jpg";
-import SeccionVenta from "../components/SeccionVenta";
+import Theme from "../../config/Theme";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import ImgTurtle from "./../../../public/img/animales/turtle.jpg";
+import SeccionVenta from "../../components/SeccionVenta";
+import HeroMedium from "../../components/HeroMedium";
 
-export default function GatosCat({ userMaster }) {
+export default function Otros({ userMaster }) {
   return (
     <>
       <Header userMaster={userMaster} />
-      <ContainerContenido>
-        <CajaImgHero>
-          <CajaFrosting>
-            <Titulo>Perros</Titulo>
-          </CajaFrosting>
-        </CajaImgHero>
-      </ContainerContenido>
+      <HeroMedium imgBg={ImgTurtle} titulo={"Otros"} />
       <Seccion className="padding">
         <SeccionVenta btnMasDisabled={true} />
       </Seccion>

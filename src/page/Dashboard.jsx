@@ -19,6 +19,9 @@ import { BotonGeneral } from "../components/ElementosGenerales";
 import { cargarDatos } from "../libs/runLoteFirebase";
 import { itemSchema } from "../schema/itemSchema";
 import { ArticulosDBOficial } from "../DB/DB";
+import { ES6AFormat } from "../libs/FechaFormat";
+import { collection, addDoc } from "firebase/firestore";
+import db from "../firebase/firebaseConfig";
 
 export default function Dashboard({ userMaster }) {
   const [articulosDB, setArticulosDB] = useState([]);
@@ -42,6 +45,11 @@ export default function Dashboard({ userMaster }) {
       nombre: "Usuarios",
       key: "usuarios",
     },
+    {
+      select: false,
+      nombre: "Add articulo",
+      key: "addArticulo",
+    },
   ]);
 
   const handlePestannias = (e) => {
@@ -59,6 +67,28 @@ export default function Dashboard({ userMaster }) {
       ...item,
     };
   });
+
+  const [codigoCreado, setCodigoCreado] = useState(null);
+  const crearItem = (codigo) => {
+    const nuevoItem = {
+      ...itemSchema,
+      codigo: String(codigo),
+      descripcion: "Nuevo articulo",
+      isActived: false,
+      createdAt: ES6AFormat(new Date()),
+      createdBy: userMaster.userName,
+    };
+    const articulosCollection = collection(db, "articulos");
+
+    addDoc(articulosCollection, nuevoItem)
+      .then(() => {
+        console.log("Documento creado exitosamente");
+        setCodigoCreado(codigo);
+      })
+      .catch((error) => {
+        console.error("Error al crear el documento: ", error);
+      });
+  };
   return (
     <>
       <Header userMaster={userMaster} />
@@ -121,6 +151,49 @@ export default function Dashboard({ userMaster }) {
           {arrayOpciones.find((opcion) => opcion.select).key == "usuarios" && (
             <h1>Usuarios</h1>
           )}
+          {arrayOpciones.find((opcion) => opcion.select).key ==
+            "addArticulo" && (
+            <ContenedorAddArticulo>
+              <BarraInternaAdditem>
+                {!codigoCreado && (
+                  <TextoInterno>
+                    Proximo codigo a crear:{" "}
+                    {articulosDBSort.length > 0
+                      ? Number(
+                          articulosDBSort[articulosDBSort.length - 1].codigo
+                        ) + 1
+                      : ""}
+                  </TextoInterno>
+                )}
+                {codigoCreado ? (
+                  <TextoInterno>
+                    Codigo creado: {codigoCreado}
+                    <Enlace
+                      className="margin"
+                      to={"/articulos/" + codigoCreado}
+                    >
+                      Ver articulo
+                    </Enlace>
+                  </TextoInterno>
+                ) : (
+                  ""
+                )}
+              </BarraInternaAdditem>
+              <BarraInternaAdditem>
+                <BotonGeneral
+                  onClick={(e) =>
+                    crearItem(
+                      Number(
+                        articulosDBSort[articulosDBSort.length - 1].codigo
+                      ) + 1
+                    )
+                  }
+                >
+                  Crear item
+                </BotonGeneral>
+              </BarraInternaAdditem>
+            </ContenedorAddArticulo>
+          )}
         </CajaElements>
       </Contenedor>
       <Footer />
@@ -153,8 +226,47 @@ export const Enlace = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+  &.margin {
+    margin: 8px;
+  }
 `;
 
+const ContenedorAddArticulo = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid ${Theme.secondary.azulMarino};
+  border-radius: 10px;
+
+  background-color: ${Theme.secondary.azulMarino};
+  color: ${Theme.secondary.blanco};
+  font-size: 20px;
+`;
+const BarraInternaAdditem = styled.div`
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #0084ff;
+  border: 1px solid black;
+`;
+const TextoInterno = styled.p`
+  color: ${Theme.secondary.blanco};
+  font-size: 20px;
+
+  font-weight: 400;
+  text-align: center;
+  color: white;
+`;
 //
 //
 //
