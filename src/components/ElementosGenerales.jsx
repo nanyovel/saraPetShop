@@ -8,7 +8,7 @@ export const BotonGeneral = styled.button`
 
   border-radius: 5px;
   min-width: 100px;
-  padding: 5px;
+  padding: 8px;
   border: none;
   outline: none;
   font-size: 1rem;
@@ -16,7 +16,7 @@ export const BotonGeneral = styled.button`
   color: white;
   box-shadow: 3px 3px 3px -1px rgba(0, 0, 0, 0.43);
   display: inline-block;
-
+  min-height: 30px;
   &:focus {
     background-color: ${Theme.primary.rojoCalido};
     color: #fff;

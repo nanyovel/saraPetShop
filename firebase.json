@@ -3,7 +3,6 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "site": "sarapetshop-341",
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [

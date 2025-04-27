@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Hero from "./Partes01Home/Hero";
 import styled from "styled-components";
@@ -6,25 +6,55 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BarraMensaje from "../components/BarraMensaje";
 import Categorias from "../components/Categorias";
 import Theme from "../config/Theme";
-import Articulos from "../components/Articulos";
 import ImagenBigSection from "../components/ImagenBigSection";
 import CarrucelMarcas from "./Partes01Home/CarrucelMarcas";
 import Footer from "../components/Footer";
 import Servicios from "../components/Servicios";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Stats from "./Partes01Home/Stats";
 import { getAuth } from "firebase/auth";
 import CajaConfirmarEmail from "../components/CajaConfirmarEmail";
 import { useNavigate } from "react-router";
+import ClusterItems from "../components/ClusterItems";
+import BotonQuery from "../components/BotonQuery";
 
-export default function Home({ userMaster }) {
-  const navegacion = useNavigate();
+export default function Home({ userMaster, dbArticulos, grupoCluster }) {
   const auth = getAuth();
   auth.languageCode = "es";
   const usuario = auth.currentUser;
 
+  const idGrupoItem1 = "8f01bGdkRcvXqJMLJ0Qz";
+  const idGrupoItem2 = "GfcWBf4ahQGq1AUi7qGf";
+
+  const [grupoItems1, setGrupoItems1] = useState({});
+  const [grupoItems2, setGrupoItems2] = useState({});
+
+  const [datosParsed, setDatosParsed] = useState(false);
+  useEffect(() => {
+    if (dbArticulos.length > 0 && grupoCluster.length > 0) {
+      const grupo1Find = grupoCluster.find((item) => item.id == idGrupoItem1);
+      const grupo2Find = grupoCluster.find((item) => item.id == idGrupoItem2);
+
+      const articuloGrupo1 = dbArticulos.filter((item) =>
+        grupo1Find.codigoItems.includes(item.codigo)
+      );
+      const articuloGrupo2 = dbArticulos.filter((item) =>
+        grupo2Find.codigoItems.includes(item.codigo)
+      );
+      setGrupoItems1({
+        ...grupo1Find,
+        listaProductos: articuloGrupo1.sort((a, b) => a.codigo - b.codigo),
+      });
+      setGrupoItems2({
+        ...grupo2Find,
+        listaProductos: articuloGrupo2.sort((a, b) => a.codigo - b.codigo),
+      });
+    }
+    setDatosParsed(true);
+  }, [dbArticulos, grupoCluster]);
+
   return (
     <Container>
+      <BotonQuery grupoItems1={grupoItems1} grupoItems2={grupoItems2} />
       {!usuario?.emailVerified && location !== "/" && <CajaConfirmarEmail />}
       <WrapHero>
         <Header home={true} userMaster={userMaster} />
@@ -38,22 +68,13 @@ export default function Home({ userMaster }) {
         <Categorias />
       </Seccion>
       <Seccion className="padding bgWhite">
-        <TituloSeccion>Alimentos</TituloSeccion>
-        <WrapBarraProductos>
-          <CajaBarraNegraSeccion className="top">
-            <TituloBarra>
-              Alimentos para cualquier tipo de mascotas.
-            </TituloBarra>
-          </CajaBarraNegraSeccion>
-          <Articulos tipo={"ofertas"} />
-          <CajaVerMas>
-            <TextoVerMas>
-              Ver todos
-              <Icono className="marginLeft" icon={faArrowRight} />
-            </TextoVerMas>
-          </CajaVerMas>
-          <CajaBarraNegraSeccion className="bottom"></CajaBarraNegraSeccion>
-        </WrapBarraProductos>
+        {datosParsed && grupoItems1?.id && (
+          <ClusterItems
+            datos={grupoItems1}
+            userMaster={userMaster}
+            dbArticulos={dbArticulos}
+          />
+        )}
       </Seccion>
       <Seccion className=" bgRed">
         <TituloSeccion className="white">Servicios</TituloSeccion>
@@ -63,24 +84,14 @@ export default function Home({ userMaster }) {
         <ImagenBigSection />
       </Seccion>
       <Seccion className="padding bgWhite">
-        <TituloSeccion>Mascotas</TituloSeccion>
-        <WrapBarraProductos>
-          <CajaBarraNegraSeccion className="top">
-            <TituloBarra>Tenemos todo tipo de mascotas</TituloBarra>
-          </CajaBarraNegraSeccion>
-          <Articulos tipo={"ofertas"} />
-          <CajaVerMas>
-            <TextoVerMas>
-              Ver todos
-              <Icono className="marginLeft" icon={faArrowRight} />
-            </TextoVerMas>
-          </CajaVerMas>
-          <CajaBarraNegraSeccion className="bottom"></CajaBarraNegraSeccion>
-        </WrapBarraProductos>
+        {datosParsed && grupoItems2?.titulo && (
+          <ClusterItems
+            datos={grupoItems2}
+            userMaster={userMaster}
+            dbArticulos={dbArticulos}
+          />
+        )}
       </Seccion>
-      {/*  */}
-      {/*  */}
-      {/*  */}
       <Seccion className=" bgRed2">
         <TituloSeccion className="white">Nuestras marcas</TituloSeccion>
         <CarrucelMarcas />

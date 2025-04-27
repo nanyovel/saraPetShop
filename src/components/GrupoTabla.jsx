@@ -92,3 +92,35 @@ export const CeldasBodyGroup = styled.td`
     border-left: 1px solid #e1eef4;
   }
 `;
+
+export const EnlaceButton = styled(Enlace)`
+  margin: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+
+  border-radius: 5px;
+  min-width: 100px;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: ${Theme.primary.rojoBrillante};
+  color: white;
+  box-shadow: 3px 3px 3px -1px rgba(0, 0, 0, 0.43);
+  display: inline-block;
+  min-height: 30px;
+  &:focus {
+    background-color: ${Theme.primary.rojoCalido};
+    color: #fff;
+  }
+
+  &:hover {
+    background-color: #fff;
+    color: ${Theme.primary.rojoCalido};
+  }
+  &:active {
+    background-color: ${Theme.secondary.coralCalido};
+    color: #fff;
+  }
+`;

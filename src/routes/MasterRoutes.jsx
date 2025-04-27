@@ -1,9 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 import Home from "../page/Home";
-import Mascotas from "../page/Mascotas";
-import Accesorios from "../page/Accesorios";
-import Alimentos from "../page/Alimentos";
 import Nosotros from "../page/Nosotros";
 import Contacto from "../page/Contacto";
 import Login from "../auth/Login";
@@ -13,25 +10,27 @@ import CategoriasRoutes from "./CategoriasRoutes";
 import { Perfil } from "../page/Perfil";
 import Page404 from "../page/Page404";
 import Dashboard from "../page/Dashboard";
-import Articulos from "../components/Articulos";
 import ArticulosView from "../view/ArticulosView";
+import SubCategoriasRoutes from "./SubCategoriasRoutes";
 
-export default function MasterRoutes({ userMaster }) {
+export default function MasterRoutes({
+  userMaster,
+  dbArticulos,
+  grupoCluster,
+}) {
   return (
     <Routes>
-      <Route path="/" element={<Home userMaster={userMaster} />} />
       <Route
-        path="/subCategorias/mascotas"
-        element={<Mascotas userMaster={userMaster} />}
+        path="/"
+        element={
+          <Home
+            userMaster={userMaster}
+            dbArticulos={dbArticulos}
+            grupoCluster={grupoCluster}
+          />
+        }
       />
-      <Route
-        path="/subCategorias/accesorios"
-        element={<Accesorios userMaster={userMaster} />}
-      />
-      <Route
-        path="/subCategorias/alimentos"
-        element={<Alimentos userMaster={userMaster} />}
-      />
+
       <Route path="/nosotros" element={<Nosotros userMaster={userMaster} />} />
       <Route path="/contacto" element={<Contacto userMaster={userMaster} />} />
       <Route path="/login" element={<Login userMaster={userMaster} />} />
@@ -45,7 +44,33 @@ export default function MasterRoutes({ userMaster }) {
       />
       <Route
         path="/categorias/*"
-        element={<CategoriasRoutes userMaster={userMaster} />}
+        element={
+          <CategoriasRoutes
+            userMaster={userMaster}
+            dbArticulos={dbArticulos}
+            grupoCluster={grupoCluster}
+          />
+        }
+      />
+      <Route
+        path="/categorias/*"
+        element={
+          <CategoriasRoutes
+            userMaster={userMaster}
+            dbArticulos={dbArticulos}
+            grupoCluster={grupoCluster}
+          />
+        }
+      />
+      <Route
+        path="/subCategorias/*"
+        element={
+          <SubCategoriasRoutes
+            userMaster={userMaster}
+            dbArticulos={dbArticulos}
+            grupoCluster={grupoCluster}
+          />
+        }
       />
       <Route
         path="/dashboard"
@@ -53,7 +78,9 @@ export default function MasterRoutes({ userMaster }) {
       />
       <Route
         path="/articulos/:id"
-        element={<ArticulosView userMaster={userMaster} />}
+        element={
+          <ArticulosView userMaster={userMaster} dbArticulos={dbArticulos} />
+        }
       />
       <Route path="/perfil" element={<Perfil userMaster={userMaster} />} />
       <Route path="*" element={<Page404 userMaster={userMaster} />} />

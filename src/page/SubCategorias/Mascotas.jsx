@@ -1,28 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Theme from "../../config/Theme";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import ImgBird from "./../../../public/img/animales/cuteBird.jpg";
-import SeccionVenta from "../../components/SeccionVenta";
+import ImgPets from "./../../../public/img/animales/pets.jpg";
 import HeroMedium from "../../components/HeroMedium";
-
-import { useEffect, useState } from "react";
-import ClusterItems from "../../components/ClusterItems";
 import SideBarCategorias from "../../components/SideBarCategorias";
+import ClusterItems from "../../components/ClusterItems";
 
-export default function GatosCat({
+export default function Mascotas({
   userMaster,
   dbArticulos,
   grupoCluster,
   idGruposItems,
 }) {
+  const [datosParsed, setDatosParsed] = useState(false);
+
   const [grupoItems1, setGrupoItems1] = useState([]);
   const [grupoItems2, setGrupoItems2] = useState([]);
   const [grupoItems3, setGrupoItems3] = useState([]);
   const [grupoItems4, setGrupoItems4] = useState([]);
 
-  const [datosParsed, setDatosParsed] = useState(false);
   useEffect(() => {
     if (dbArticulos.length > 0 && grupoCluster.length > 0) {
       // Buscando los cluster deseado
@@ -77,7 +74,8 @@ export default function GatosCat({
   return (
     <>
       <Header userMaster={userMaster} />
-      <HeroMedium imgBg={ImgBird} titulo={"Aves"} />
+      <HeroMedium imgBg={ImgPets} titulo={"Mascotas"} />
+
       <WrapMaster>
         <CajaSideBar>
           <SideBarCategorias />
@@ -121,19 +119,12 @@ export default function GatosCat({
           </Seccion>
         </WrapSecciones>
       </WrapMaster>
-
       <Footer />
     </>
   );
 }
 
-const Seccion = styled.div`
-  &.padding {
-    padding-left: ${Theme.config.paddingLateral};
-    padding-right: ${Theme.config.paddingLateral};
-  }
-`;
-
+const Seccion = styled.div``;
 const WrapMaster = styled.div`
   display: flex;
   padding: 0 70px;
@@ -141,10 +132,8 @@ const WrapMaster = styled.div`
 `;
 const CajaSideBar = styled.div`
   width: calc(20% - 20px);
-  /* border: 1px solid red; */
 `;
 const WrapSecciones = styled.div`
-  /* border: 1px solid blue; */
   width: calc(80% - 20px);
   min-height: 200px;
 `;

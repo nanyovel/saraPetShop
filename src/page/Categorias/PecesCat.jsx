@@ -7,57 +7,134 @@ import ImgPeces from "./../../../public/img/animales/fish-222464_1280.jpg";
 import SeccionVenta from "../../components/SeccionVenta";
 import HeroMedium from "../../components/HeroMedium";
 
-export default function PecesCat({ userMaster }) {
+import { useEffect, useState } from "react";
+import ClusterItems from "../../components/ClusterItems";
+import SideBarCategorias from "../../components/SideBarCategorias";
+
+export default function GatosCat({
+  userMaster,
+  dbArticulos,
+  grupoCluster,
+  idGruposItems,
+}) {
+  const [grupoItems1, setGrupoItems1] = useState([]);
+  const [grupoItems2, setGrupoItems2] = useState([]);
+  const [grupoItems3, setGrupoItems3] = useState([]);
+  const [grupoItems4, setGrupoItems4] = useState([]);
+
+  const [datosParsed, setDatosParsed] = useState(false);
+  useEffect(() => {
+    if (dbArticulos.length > 0 && grupoCluster.length > 0) {
+      // Buscando los cluster deseado
+      const grupo1Find = grupoCluster.find(
+        (item) => item.id == idGruposItems[0]
+      );
+      const grupo2Find = grupoCluster.find(
+        (item) => item.id == idGruposItems[1]
+      );
+      const grupo3Find = grupoCluster.find(
+        (item) => item.id == idGruposItems[2]
+      );
+      const grupo4Find = grupoCluster.find(
+        (item) => item.id == idGruposItems[3]
+      );
+
+      // Buscando los articulos en la coleccion de items, segun el array de articulos del cluster
+      const articuloGrupo1 = dbArticulos.filter((item) =>
+        grupo1Find.codigoItems.includes(item.codigo)
+      );
+      const articuloGrupo2 = dbArticulos.filter((item) =>
+        grupo2Find.codigoItems.includes(item.codigo)
+      );
+      const articuloGrupo3 = dbArticulos.filter((item) =>
+        grupo3Find.codigoItems.includes(item.codigo)
+      );
+      const articuloGrupo4 = dbArticulos.filter((item) =>
+        grupo4Find.codigoItems.includes(item.codigo)
+      );
+
+      // Asignando los datos en cada esado
+      setGrupoItems1({
+        ...grupo1Find,
+        listaProductos: articuloGrupo1.sort((a, b) => a.codigo - b.codigo),
+      });
+      setGrupoItems2({
+        ...grupo2Find,
+        listaProductos: articuloGrupo2.sort((a, b) => a.codigo - b.codigo),
+      });
+      setGrupoItems3({
+        ...grupo3Find,
+        listaProductos: articuloGrupo3.sort((a, b) => a.codigo - b.codigo),
+      });
+      setGrupoItems4({
+        ...grupo4Find,
+        listaProductos: articuloGrupo4.sort((a, b) => a.codigo - b.codigo),
+      });
+    }
+    setDatosParsed(true);
+  }, [dbArticulos, grupoCluster]);
+
   return (
     <>
       <Header userMaster={userMaster} />
       <HeroMedium imgBg={ImgPeces} titulo={"Peces"} />
-      <Seccion className="padding">
-        <SeccionVenta btnMasDisabled={true} />
-      </Seccion>
-      <Seccion className="padding">
-        <SeccionVenta btnMasDisabled={true} />
-      </Seccion>
-      <Seccion className="padding">
-        <SeccionVenta btnMasDisabled={true} />
-      </Seccion>
-
+      <WrapMaster>
+        <CajaSideBar>
+          <SideBarCategorias />
+        </CajaSideBar>
+        <WrapSecciones>
+          <Seccion className="padding">
+            {datosParsed && grupoItems1?.id && (
+              <ClusterItems
+                datos={grupoItems1}
+                userMaster={userMaster}
+                dbArticulos={dbArticulos}
+              />
+            )}
+          </Seccion>
+          <Seccion className="padding">
+            {datosParsed && grupoItems2?.id && (
+              <ClusterItems
+                datos={grupoItems2}
+                userMaster={userMaster}
+                dbArticulos={dbArticulos}
+              />
+            )}
+          </Seccion>
+          <Seccion className="padding">
+            {datosParsed && grupoItems3?.id && (
+              <ClusterItems
+                datos={grupoItems3}
+                userMaster={userMaster}
+                dbArticulos={dbArticulos}
+              />
+            )}
+          </Seccion>
+          <Seccion className="padding">
+            {datosParsed && grupoItems4?.id && (
+              <ClusterItems
+                datos={grupoItems4}
+                userMaster={userMaster}
+                dbArticulos={dbArticulos}
+              />
+            )}
+          </Seccion>
+        </WrapSecciones>
+      </WrapMaster>
       <Footer />
     </>
   );
 }
-
-const ContainerContenido = styled.div``;
-const CajaImgHero = styled.div`
-  width: 100%;
-  height: 500px;
-  background-image: url("/img/animales/perrosMuch.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-bottom: 70px;
-  background-position: center;
-  position: relative;
-`;
-const CajaFrosting = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #921a1a7e;
-  position: absolute;
-  top: 0;
-  left: 0;
+const Seccion = styled.div``;
+const WrapMaster = styled.div`
   display: flex;
-  align-items: center;
+  padding: 0 70px;
+  gap: 20px;
 `;
-const Titulo = styled.h1`
-  width: 100%;
-  text-align: center;
-  font-size: 5rem;
-  color: white;
+const CajaSideBar = styled.div`
+  width: calc(20% - 20px);
 `;
-
-const Seccion = styled.div`
-  &.padding {
-    padding-left: ${Theme.config.paddingLateral};
-    padding-right: ${Theme.config.paddingLateral};
-  }
+const WrapSecciones = styled.div`
+  width: calc(80% - 20px);
+  min-height: 200px;
 `;

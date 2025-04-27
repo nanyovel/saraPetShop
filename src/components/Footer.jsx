@@ -54,6 +54,7 @@ export default function Footer() {
             <Icono icon={faFacebook} />
           </Enlace>
           <Enlace
+            target="_blank"
             to={
               "https://api.whatsapp.com/send?phone=+18099732098&text=Hola,%20quisiera%20por%20favor%20ser%20asistido."
             }

@@ -20,8 +20,10 @@ import { cargarDatos } from "../libs/runLoteFirebase";
 import { itemSchema } from "../schema/itemSchema";
 import { ArticulosDBOficial } from "../DB/DB";
 import { ES6AFormat } from "../libs/FechaFormat";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc } from "firebase/firestore";
 import db from "../firebase/firebaseConfig";
+import BotonQuery from "../components/BotonQuery";
+import { clusterSchema } from "../schema/clusterSchema";
 
 export default function Dashboard({ userMaster }) {
   const [articulosDB, setArticulosDB] = useState([]);
@@ -61,12 +63,16 @@ export default function Dashboard({ userMaster }) {
       }))
     );
   };
-  const articulosParsed = ArticulosDBOficial.map((item) => {
-    return {
-      ...itemSchema,
-      ...item,
-    };
-  });
+
+  // const articulosParsed = ArticulosDBOficial.map((item) => {
+  //   return''
+  //   return {
+  //     ...itemSchema,
+  //     ...item,
+  //     createdAt: ES6AFormat(new Date()),
+  //     createdBy: userMaster.userName,
+  //   };
+  // });
 
   const [codigoCreado, setCodigoCreado] = useState(null);
   const crearItem = (codigo) => {
@@ -79,6 +85,7 @@ export default function Dashboard({ userMaster }) {
       createdBy: userMaster.userName,
     };
     const articulosCollection = collection(db, "articulos");
+    console.log(articulosCollection);
 
     addDoc(articulosCollection, nuevoItem)
       .then(() => {
@@ -89,19 +96,38 @@ export default function Dashboard({ userMaster }) {
         console.error("Error al crear el documento: ", error);
       });
   };
+
+  const [mensajeAlerta, setMensajeAlerta] = useState("");
+  const crearCluster = async () => {
+    const clusterCollection = collection(db, "grupoDeArticulos");
+    try {
+      const clusterCreado = await addDoc(clusterCollection, {
+        ...clusterSchema,
+      });
+      setMensajeAlerta("ID creado: " + clusterCreado.id);
+    } catch (error) {
+      console.log(error);
+      setMensajeAlerta("Error con la base de datos.");
+    }
+  };
   return (
     <>
       <Header userMaster={userMaster} />
       <HeroMedium titulo="Dashboard" imgBg={ImgBird} />
-      <BotonGeneral onClick={() => cargarDatos(articulosParsed, "articulos")}>
+      {/* <BotonGeneral onClick={() => cargarDatos(articulosParsed, "articulos")}>
         Cargar
-      </BotonGeneral>
+      </BotonGeneral> */}
       <Contenedor>
         <CajaElements>
           <MenuPestannias
             handlePestannias={handlePestannias}
             arrayOpciones={arrayOpciones}
           />
+          {mensajeAlerta && (
+            <CajaAlerta>
+              <TextoAlerta>{mensajeAlerta}</TextoAlerta>
+            </CajaAlerta>
+          )}
           {arrayOpciones.find((opcion) => opcion.select).key == "articulos" && (
             <CajaTabla>
               <Tabla>
@@ -191,6 +217,9 @@ export default function Dashboard({ userMaster }) {
                 >
                   Crear item
                 </BotonGeneral>
+                <BotonGeneral onClick={crearCluster}>
+                  Crear Cluster
+                </BotonGeneral>
               </BarraInternaAdditem>
             </ContenedorAddArticulo>
           )}
@@ -266,6 +295,16 @@ const TextoInterno = styled.p`
   font-weight: 400;
   text-align: center;
   color: white;
+`;
+
+const CajaAlerta = styled.div`
+  width: 100%;
+  height: 100px;
+  background-color: ${Theme.primary.rojoCalido};
+`;
+const TextoAlerta = styled.p`
+  color: white;
+  font-size: 1.2rem;
 `;
 //
 //

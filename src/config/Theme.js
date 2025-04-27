@@ -31,6 +31,7 @@ const Theme = {
     info: "#178192",
   },
   config: {
+    modoDev: false,
     paddingLateral: "150px",
     sombra: "3px 7px 11px 0px rgba(0, 0, 0, 0.75)",
     sombraAzul1: "3px 7px 11px 0px rgb(168, 218, 220)",

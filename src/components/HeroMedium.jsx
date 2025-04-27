@@ -16,12 +16,12 @@ export default function HeroMedium({ titulo, imgBg }) {
 const ContainerContenido = styled.div``;
 const CajaImgHero = styled.div`
   width: 100%;
-  height: 500px;
+  height: 600px;
   background-image: url(${(props) => (props.$imgFondo ? props.$imgFondo : "")});
   background-size: cover;
   background-repeat: no-repeat;
   margin-bottom: 70px;
-  background-position: center;
+  background-position: 50% 30%;
   position: relative;
 `;
 const CajaFrosting = styled.div`

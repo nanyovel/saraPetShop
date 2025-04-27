@@ -37,7 +37,7 @@ export default function Header({ home, userMaster }) {
             <TextoTel className="tel">
               <Ancla
                 target="_blank"
-                href="https://api.whatsapp.com/send?phone=+18099732098&text=Hola%20equipo%SaraPetShop,%20quisiera%20por%20favor%20ser%20asistido."
+                href="https://api.whatsapp.com/send?phone=+18099732098&text=Hola%20equipo%20SaraPetShop,%20quisiera%20por%20favor%20ser%20asistido."
               >
                 <Icono icon={faWhatsapp} />
                 <SpanTel>Tel:</SpanTel>

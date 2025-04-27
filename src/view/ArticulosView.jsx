@@ -22,7 +22,7 @@ import {
   Opciones,
 } from "../components/ElementosGenerales";
 import MenuPestannias from "../components/MenuPestannias";
-import { Enlace } from "../components/GrupoTabla";
+import { Enlace, EnlaceButton } from "../components/GrupoTabla";
 import { useDocByCondition } from "../libs/firebaseLibs";
 import { useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,15 +34,16 @@ import { doc, updateDoc, writeBatch } from "firebase/firestore";
 import { ModalLoading } from "../components/ModalLoading";
 import { is } from "date-fns/locale";
 import Articulos from "../components/Articulos";
+import ClusterItems from "../components/ClusterItems";
 
-export default function ArticulosView({ userMaster }) {
+export default function ArticulosView({ userMaster, dbArticulos }) {
   const param = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
   const [itemsDB, setItemsDB] = useState({});
   const [itemMaster, setItemMaster] = useState({});
   const [datosParsed, setDatosParsed] = useState(false);
-  useDocByCondition("articulos", setItemsDB, "codigo", "==", param.id);
+  useDocByCondition("articulos", setItemsDB, "codigo", "==", Number(param.id));
   useEffect(() => {
     if (itemsDB.length > 0) {
       console.log(itemsDB[0]);
@@ -328,6 +329,29 @@ export default function ArticulosView({ userMaster }) {
       setIsLoading(false);
     }
   };
+  const [itemsRelacionados, setItemsRelacionados] = useState({});
+  useEffect(() => {
+    const itemsRelax = dbArticulos
+      .filter(
+        (item) =>
+          item.cat === itemMaster.cat && item.subCat === itemMaster.subCat
+      )
+      .sort(() => Math.random() - 0.5) // Mezcla aleatoriamente
+      .slice(0, 10); // Limita a los primeros 10 items
+
+    setItemsRelacionados({
+      listaProductos: itemsRelax,
+    });
+  }, [dbArticulos, itemMaster]);
+
+  const generaLinkWA = (codigo) => {
+    const apiWhatsApp =
+      "https://api.whatsapp.com/send?phone=+18099732098&text=";
+    const textoSaludo =
+      "Hola equipo de Sara Pet Shop, estoy interesado en comprar este producto ";
+    const path = "https://sarapetshop.com/articulos/";
+    return apiWhatsApp + encodeURIComponent(textoSaludo + path + codigo);
+  };
   return (
     datosParsed && (
       <>
@@ -337,6 +361,7 @@ export default function ArticulosView({ userMaster }) {
           itemMaster={itemMaster}
           listaImagenes={listaImagenes}
           listaImgEdit={listaImgEdit}
+          itemsRelacionados={itemsRelacionados}
         />
         <HeroMedium titulo={"Producto"} imgBg={imgCatBlack} />
         <Container>
@@ -565,7 +590,12 @@ export default function ArticulosView({ userMaster }) {
                 </CajaStar>
                 {!modoEdicion && (
                   <CajaCTA>
-                    <BotonGeneral>Comprar</BotonGeneral>
+                    <EnlaceButton
+                      target="_blank"
+                      to={generaLinkWA(itemMaster.codigo)}
+                    >
+                      Comprar
+                    </EnlaceButton>
                   </CajaCTA>
                 )}
                 <CajaDetallesFinal>
@@ -734,12 +764,9 @@ export default function ArticulosView({ userMaster }) {
               </CajaDetalles>
             </WrapTop>
             <WrapBottom>
-              <ContenedorItemSimilares>
-                <TituloRelacionados>Articulos relacionados</TituloRelacionados>
-                <WrapItemsSimilares>
-                  <Articulos tipo={"ofertas"} />
-                </WrapItemsSimilares>
-              </ContenedorItemSimilares>
+              {itemsRelacionados.listaProductos.length > 0 && (
+                <ClusterItems datos={itemsRelacionados} noEditable={true} />
+              )}
             </WrapBottom>
           </ContenedorItem>
         </Container>

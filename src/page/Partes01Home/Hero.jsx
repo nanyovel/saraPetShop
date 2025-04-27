@@ -2,13 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 import Theme from "../../config/Theme";
-import Escaparate from "../../components/Escaparate";
 import Desvanecer from "../../components/Desvanecer";
 
 export default function Hero() {
   return (
     <Container>
-      {/* <Escaparate /> */}
       <Desvanecer />
     </Container>
   );

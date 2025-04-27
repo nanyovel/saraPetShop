@@ -9,6 +9,7 @@ import Img5 from "./../../public/img/fondo/koi11.jpg";
 // import Img6 from "./../../public/img/fondo/goldenPerro.jpg";
 import Img7 from "./../../public/img/fondo/shitzuPerro.jpg";
 import { BotonGeneral } from "./ElementosGenerales";
+import { Enlace } from "./GrupoTabla";
 
 export default function Desvanecer() {
   const items = [
@@ -59,6 +60,8 @@ export default function Desvanecer() {
       setClaseColocar("colocar");
     }, 1000);
   }, [activeIndex]);
+  const linkWA =
+    "https://api.whatsapp.com/send?phone=+18099732098&text=Hola%20equipo%20Sara%20Pet%20Shop,%20quisiera%20por%20favor%20ser%20asistido.";
 
   return (
     <Container>
@@ -82,9 +85,14 @@ export default function Desvanecer() {
             <WrapSubtitulo>
               <SubTitulo>{foto.subTitulo}</SubTitulo>
             </WrapSubtitulo>
-            <CajaBtn>
+            {/* <CajaBtn>
               <BtnSimple>Mas info.</BtnSimple>
-            </CajaBtn>
+            </CajaBtn> */}
+            <CajaBoton>
+              <Enlace2 target="_blank" to={linkWA}>
+                Mas info
+              </Enlace2>
+            </CajaBoton>
           </CajaTexto>
         </React.Fragment>
       ))}
@@ -136,6 +144,7 @@ const CajaTexto = styled.div`
   top: ${(props) => (props.$isActive ? "400px" : "250px")};
   left: 80px;
   bottom: 100px;
+  visibility: ${(props) => (props.$isActive ? "" : "hidden")};
   opacity: ${(props) => (props.$isActive ? 1 : 0)};
   transition: all 1.5s ease;
   /* transition: top 1.4s ease; */
@@ -143,6 +152,7 @@ const CajaTexto = styled.div`
   border-radius: 5px;
   box-shadow: ${Theme.config.sombra};
   z-index: 100;
+
   @media screen and (max-width: 580px) {
     width: 80%;
     left: 20px;
@@ -187,7 +197,41 @@ const CajaBtn = styled.div`
   width: 100%;
   /* display: flex; */
   /* justify-content: center; */
+  z-index: 1000;
 `;
 const BtnSimple = styled(BotonGeneral)`
   z-index: 10000;
+`;
+
+const CajaBoton = styled.div``;
+const Enlace2 = styled(Enlace)`
+  margin: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+
+  border-radius: 5px;
+  min-width: 100px;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: ${Theme.primary.rojoBrillante};
+  color: white;
+  box-shadow: 3px 3px 3px -1px rgba(0, 0, 0, 0.43);
+  display: inline-block;
+  min-height: 30px;
+  &:focus {
+    background-color: ${Theme.primary.rojoCalido};
+    color: #fff;
+  }
+
+  &:hover {
+    background-color: #fff;
+    color: ${Theme.primary.rojoCalido};
+  }
+  &:active {
+    background-color: ${Theme.secondary.coralCalido};
+    color: #fff;
+  }
 `;

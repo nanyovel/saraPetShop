@@ -1,8 +1,41 @@
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// este componente se debe eliminar
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+// ❌❌❌❌❌❌❌
+
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Theme from "../config/Theme";
-import { ArticulosLista, CategoriasLista } from "../DB/DB";
-import Articulo from "./Articulo";
+import { ArticulosLista } from "../DB/DB";
+import FotoItem from "./FotoItem";
 import { BotonGeneral } from "./ElementosGenerales";
 
 export default function Articulos({ tipo }) {
@@ -38,7 +71,7 @@ export default function Articulos({ tipo }) {
         return (
           <Wrap key={index}>
             <CajaItems key={index}>
-              <Articulo imagenes={item.fotos} />
+              <FotoItem imagenes={item.fotos} />
             </CajaItems>
             <CajaDetalles>
               <CajitaDetalles>
@@ -64,11 +97,14 @@ export default function Articulos({ tipo }) {
   );
 }
 const Container = styled.div`
-  width: 80%;
+  width: 100%;
   margin: auto;
   display: flex;
   gap: 20px;
   justify-content: space-between;
+  padding: 0 40px;
+  border: 2px solid red;
+  overflow-x: auto;
 `;
 const Wrap = styled.div`
   width: 300px;

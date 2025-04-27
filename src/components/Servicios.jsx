@@ -9,6 +9,8 @@ import ImgBannio from "./../../public/img/iconos/banos.png";
 import ImgPelo from "./../../public/img/iconos/gato.png";
 import ImgParasito from "./../../public/img/iconos/parasito.png";
 import BotonQuery from "./BotonQuery";
+import { Enlace } from "./GrupoTabla";
+import { ServiciosLista } from "../DB/DB";
 
 export default function Servicios() {
   const [hasHover, setHasHover] = useState([
@@ -35,147 +37,76 @@ export default function Servicios() {
       })
     );
   };
+
+  function separarTexto(texto, palabraClave) {
+    const indiceInicio = texto.indexOf(palabraClave);
+
+    // Si no encuentra la palabra clave, devuelve el texto completo como "antes"
+    if (indiceInicio === -1) {
+      return {
+        antes: texto,
+        palabra: "",
+        despues: "",
+      };
+    }
+
+    const indiceFinal = indiceInicio + palabraClave.length;
+
+    const antes = texto.slice(0, indiceInicio);
+    const palabra = texto.slice(indiceInicio, indiceFinal);
+    const despues = texto.slice(indiceFinal);
+
+    return { antes, palabra, despues };
+  }
+  const generaLinkWA = (servicio) => {
+    const apiWhatsApp =
+      "https://api.whatsapp.com/send?phone=+18099732098&text=";
+    const textoSaludo =
+      "Hola equipo de Sara Pet Shop, me interesa su servicio de ";
+    return apiWhatsApp + encodeURIComponent(textoSaludo + servicio);
+  };
+  const serviciosParsed = ServiciosLista.map((item) => {
+    return {
+      ...item,
+      palabraClave: {
+        antes: separarTexto(item.textoCopy, "mascota").antes,
+        despues: separarTexto(item.textoCopy, "mascota").despues,
+        palabra: separarTexto(item.textoCopy, "mascota").palabra,
+      },
+    };
+  });
+
   return (
     <Container>
-      <Card
-        data-numero={0}
-        onMouseEnter={(e) => growBox(e)}
-        onMouseLeave={(e) => lessBox(e)}
-      >
-        <CajaIcono>
-          <Img src={ImgVacuna} />
-        </CajaIcono>
-        <CajaTitulo>
-          <Titulo>Vacunacion</Titulo>
-        </CajaTitulo>
-        <CajaCopy>
-          <TextoCopy className={hasHover[0] ? "grande" : ""}>
-            ¡Protege la salud de tu <b>mascota</b>! Nuestras vacunas aprobadas
-            aseguran que tu compañero peludo esté protegido contra enfermedades
-            comunes. Ofrecemos un ambiente seguro y profesional para que cada
-            visita sea tranquila y efectiva. ¡Agenda tu cita hoy!
-          </TextoCopy>
-        </CajaCopy>
-        <CajaBoton>
-          <BtnSimple>Mas info</BtnSimple>
-        </CajaBoton>
-      </Card>
-      <Card
-        data-numero={1}
-        onMouseEnter={(e) => growBox(e)}
-        onMouseLeave={(e) => lessBox(e)}
-      >
-        <CajaIcono>
-          <Img src={ImgUnnia} />
-        </CajaIcono>
-        <CajaTitulo>
-          <Titulo>Corte de uñas</Titulo>
-        </CajaTitulo>
-        <CajaCopy>
-          <TextoCopy className={hasHover[1] ? "grande" : ""}>
-            Mantén las patas de tu <b>mascota</b> saludables con nuestro
-            servicio de corte de uñas. Unas uñas bien cortadas no solo son
-            estéticamente agradables, sino que también previenen molestias y
-            lesiones. ¡Ven y deja que nuestros expertos cuiden de tu peludo!
-          </TextoCopy>
-        </CajaCopy>
-        <CajaBoton>
-          <BtnSimple>Mas info</BtnSimple>
-        </CajaBoton>
-      </Card>
-      <Card
-        data-numero={2}
-        onMouseEnter={(e) => growBox(e)}
-        onMouseLeave={(e) => lessBox(e)}
-      >
-        <CajaIcono>
-          <Img src={ImgOidos} />
-        </CajaIcono>
-        <CajaTitulo>
-          <Titulo>Limpieza oidos</Titulo>
-        </CajaTitulo>
-        <CajaCopy>
-          <TextoCopy className={hasHover[2] ? "grande" : ""}>
-            La salud auditiva es esencial para tu <b>mascota</b>. Nuestro
-            servicio de limpieza de oídos elimina la cera y la suciedad,
-            ayudando a prevenir infecciones. Expertos en cuidado de{" "}
-            <b>mascota</b> a tu servicio. ¡Agenda tu cita para una limpieza
-            segura y efectiva!
-          </TextoCopy>
-        </CajaCopy>
-        <CajaBoton>
-          <BtnSimple>Mas info</BtnSimple>
-        </CajaBoton>
-      </Card>
-      <Card
-        data-numero={3}
-        onMouseEnter={(e) => growBox(e)}
-        onMouseLeave={(e) => lessBox(e)}
-      >
-        <CajaIcono>
-          <Img src={ImgBannio} />
-        </CajaIcono>
-        <CajaTitulo>
-          <Titulo>Baños</Titulo>
-        </CajaTitulo>
-        <CajaCopy>
-          <TextoCopy className={hasHover[3] ? "grande" : ""}>
-            ¡Porque tu mascota también merece un spa! Ofrecemos baños
-            reparadores que dejan a tu peludo limpio, fresco y feliz. Utilizamos
-            productos de calidad, ideales para su tipo de piel y pelaje. ¡Haz
-            que cada baño sea un placer!
-          </TextoCopy>
-        </CajaCopy>
-        <CajaBoton>
-          <BtnSimple>Mas info</BtnSimple>
-        </CajaBoton>
-      </Card>
-      <Card
-        data-numero={4}
-        onMouseEnter={(e) => growBox(e)}
-        onMouseLeave={(e) => lessBox(e)}
-      >
-        <CajaIcono>
-          <Img src={ImgPelo} />
-        </CajaIcono>
-        <CajaTitulo>
-          <Titulo>Peluqueria</Titulo>
-        </CajaTitulo>
-        <CajaCopy>
-          <TextoCopy className={hasHover[4] ? "grande" : ""}>
-            Dale a tu <b>mascota</b> un nuevo look con nuestro servicio de corte
-            de pelo. Nuestros estilistas experimentados brindan cortes que se
-            adaptan a la raza y estilo de vida de tu amigo. ¡Salud y estética en
-            un solo lugar!
-          </TextoCopy>
-        </CajaCopy>
-        <CajaBoton>
-          <BtnSimple>Mas info</BtnSimple>
-        </CajaBoton>
-      </Card>
-      <Card
-        data-numero={5}
-        onMouseEnter={(e) => growBox(e)}
-        onMouseLeave={(e) => lessBox(e)}
-      >
-        <CajaIcono>
-          <Img src={ImgParasito} />
-        </CajaIcono>
-        <CajaTitulo>
-          <Titulo>Desparasitacion</Titulo>
-        </CajaTitulo>
-        <CajaCopy>
-          <TextoCopy className={hasHover[5] ? "grande" : ""}>
-            Mantén a raya a los indeseables con nuestro servicio de
-            desparacitación. Protegemos la salud de tu <b>mascota</b> de
-            parásitos internos y externos con tratamientos seguros y efectivos.
-            ¡Haz que tu amigo esté libre de parásitos y feliz!
-          </TextoCopy>
-        </CajaCopy>
-        <CajaBoton>
-          <BtnSimple>Mas info</BtnSimple>
-        </CajaBoton>
-      </Card>
+      {serviciosParsed.map((service, index) => {
+        return (
+          <Card
+            key={index}
+            data-numero={index}
+            onMouseEnter={(e) => growBox(e)}
+            onMouseLeave={(e) => lessBox(e)}
+          >
+            <CajaIcono>
+              <Img src={service.icono} />
+            </CajaIcono>
+            <CajaTitulo>
+              <Titulo>{service.nombre}</Titulo>
+            </CajaTitulo>
+            <CajaCopy>
+              <TextoCopy className={hasHover[index] ? "grande" : ""}>
+                {service.palabraClave.antes}
+                <b>{service.palabraClave.palabra}</b>
+                {service.palabraClave.despues}
+              </TextoCopy>
+            </CajaCopy>
+            <CajaBoton>
+              <Enlace2 target="_blank" to={generaLinkWA(service.nombre)}>
+                Mas info
+              </Enlace2>
+            </CajaBoton>
+          </Card>
+        );
+      })}
     </Container>
   );
 }
@@ -248,3 +179,34 @@ const TextoCopy = styled.p`
 `;
 const CajaBoton = styled.div``;
 const BtnSimple = styled(BotonGeneral)``;
+const Enlace2 = styled(Enlace)`
+  margin: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+
+  border-radius: 5px;
+  min-width: 100px;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: ${Theme.primary.rojoBrillante};
+  color: white;
+  box-shadow: 3px 3px 3px -1px rgba(0, 0, 0, 0.43);
+  display: inline-block;
+  min-height: 30px;
+  &:focus {
+    background-color: ${Theme.primary.rojoCalido};
+    color: #fff;
+  }
+
+  &:hover {
+    background-color: #fff;
+    color: ${Theme.primary.rojoCalido};
+  }
+  &:active {
+    background-color: ${Theme.secondary.coralCalido};
+    color: #fff;
+  }
+`;

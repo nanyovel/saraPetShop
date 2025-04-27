@@ -8,6 +8,7 @@ import { useLocation } from "react-router";
 import { doc, onSnapshot } from "firebase/firestore";
 import db from "./firebase/firebaseConfig";
 import { useAuth } from "./context/AuthContext";
+import { useDocByCondition } from "./libs/firebaseLibs";
 
 export default function App() {
   // ******************** RECURSOS GENERALES ******************** //
@@ -38,9 +39,18 @@ export default function App() {
   let idUsuario = usuario?.uid ? usuario.uid : "00";
   useDocById("usuarios", setUserMaster, idUsuario);
 
+  const [dbArticulos, setDBArticulos] = useState([]);
+  const [grupoCluster, setGrupoCluster] = useState([]);
+
+  useDocByCondition("articulos", setDBArticulos);
+  useDocByCondition("grupoDeArticulos", setGrupoCluster);
   return (
     <>
-      <MasterRoutes userMaster={userMaster} />
+      <MasterRoutes
+        userMaster={userMaster}
+        dbArticulos={dbArticulos}
+        grupoCluster={grupoCluster}
+      />
     </>
   );
 }
