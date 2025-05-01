@@ -12,7 +12,6 @@ import { useDocByCondition } from "./libs/firebaseLibs";
 
 export default function App() {
   // ******************** RECURSOS GENERALES ******************** //
-  const romo = useAuth();
   const userAuth = useAuth().usuario;
   // como
   const [usuario, setUsuario] = useState(userAuth);

@@ -10,7 +10,7 @@ import { BotonGeneral, InputGeneral } from "../components/ElementosGenerales";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import CajaNotificacion from "../components/CajaNotificacion";
 
-export default function ResetPassword({ userMaste }) {
+export default function ResetPassword({ userMaster }) {
   const [correo, setCorreo] = useState("");
   const [hasAlerta, setHasAlerta] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

@@ -63,7 +63,7 @@ export default function Servicios() {
       "https://api.whatsapp.com/send?phone=+18099732098&text=";
     const textoSaludo =
       "Hola equipo de Sara Pet Shop, me interesa su servicio de ";
-    return apiWhatsApp + encodeURIComponent(textoSaludo + servicio);
+    return apiWhatsApp + encodeURIComponent(textoSaludo + servicio) + ".";
   };
   const serviciosParsed = ServiciosLista.map((item) => {
     return {
