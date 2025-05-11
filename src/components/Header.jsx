@@ -23,8 +23,8 @@ export default function Header({ home, userMaster }) {
       <Container className={home ? "home" : ""}>
         <CajaLogoTel>
           <CajitaInterna className="izq">
-            <BotonQuery userMaster={userMaster} />
-            {/* <Img src="https://i.ibb.co/D5fV0HY/logo-sara-pet-shop.png" /> */}
+            {/* <BotonQuery userMaster={userMaster} /> */}
+            <Img src="https://i.ibb.co/D5fV0HY/logo-sara-pet-shop.png" />
           </CajitaInterna>
           <WrapTel>
             <TextoTel className="tel">
