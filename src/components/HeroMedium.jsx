@@ -39,4 +39,7 @@ const Titulo = styled.h1`
   text-align: center;
   font-size: 5rem;
   color: white;
+  @media screen and (max-width: 500px) {
+    font-size: 4rem;
+  }
 `;

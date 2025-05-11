@@ -63,10 +63,12 @@ export default function Home({ userMaster, dbArticulos, grupoCluster }) {
       <Seccion className="sinMargin sinPadding">
         <BarraMensaje texto="En Sara Pet Shop encontrarás hasta lo que no sabías que querías." />
       </Seccion>
-      <Seccion className="padding">
+
+      <Seccion className="padding romo">
         <TituloSeccion>Categorias</TituloSeccion>
         <Categorias />
       </Seccion>
+
       <Seccion className="padding bgWhite">
         {datosParsed && grupoItems1?.id && (
           <ClusterItems
@@ -76,13 +78,16 @@ export default function Home({ userMaster, dbArticulos, grupoCluster }) {
           />
         )}
       </Seccion>
+
       <Seccion className=" bgRed">
         <TituloSeccion className="white">Servicios</TituloSeccion>
         <Servicios />
       </Seccion>
+
       <Seccion>
         <ImagenBigSection />
       </Seccion>
+
       <Seccion className="padding bgWhite">
         {datosParsed && grupoItems2?.titulo && (
           <ClusterItems
@@ -92,19 +97,23 @@ export default function Home({ userMaster, dbArticulos, grupoCluster }) {
           />
         )}
       </Seccion>
+
       <Seccion className=" bgRed2">
         <TituloSeccion className="white">Nuestras marcas</TituloSeccion>
         <CarrucelMarcas />
         <CarrucelMarcas invertido={true} />
-      </Seccion>{" "}
-      <Seccion>
+      </Seccion>
+      <Seccion className="stats">
         <Stats />
       </Seccion>
       <Footer />
     </Container>
   );
 }
-
+const WrapFooter = styled.div`
+  height: 500px;
+  background-color: blue;
+`;
 const Container = styled.div``;
 const WrapHero = styled.div`
   position: relative;
@@ -129,6 +138,7 @@ const Seccion = styled.div`
       padding-right: 30px;
     }
   }
+
   &.bgWhite {
     background-color: white;
     align-content: center;
@@ -143,12 +153,18 @@ const Seccion = styled.div`
     width: 100%;
     background-color: ${Theme.primary.rojoTenue};
     min-height: 200px;
+    height: auto;
   }
   &.bgRed2 {
     width: 100%;
     background-color: ${Theme.primary.rojoTenue};
     min-height: 200px;
     margin-bottom: 20px;
+  }
+  &.stats {
+    height: auto;
+    /* background-color: red; */
+    /* height: auto; */
   }
 `;
 const TituloSeccion = styled.h2`

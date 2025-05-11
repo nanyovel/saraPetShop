@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import { CSSLoader } from "./CSSLoader";
 
-export const ModalLoading = ({ completa }) => {
-  return completa ? (
+export const ModalLoading = () => {
+  return (
     <Container>
       <CSSLoader />
     </Container>
-  ) : (
-    <Container className="imcompleta"></Container>
   );
 };
 

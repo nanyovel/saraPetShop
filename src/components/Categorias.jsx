@@ -24,7 +24,7 @@ export default function Categorias() {
 }
 const Container = styled.div`
   width: 100%;
-  height: 200px;
+  height: auto;
   /* border: 2px solid red; */
   display: flex;
   gap: 20px;
@@ -72,16 +72,21 @@ const CajaCategorias = styled(Link)`
   @media screen and (max-width: 850px) {
     width: calc(100% / 3 - 15px);
   }
-  @media screen and (max-width: 460px) {
+  @media screen and (max-width: 630px) {
     width: calc(100% / 2 - 15px);
   }
-  @media screen and (max-width: 400px) {
+
+  @media screen and (max-width: 430px) {
     width: 100%;
   }
 `;
 const CajaImg = styled.div`
   width: 100%;
   height: 150px;
+  @media screen and (max-width: 430px) {
+    height: 200px;
+    width: 100%;
+  }
 `;
 const Img = styled.img`
   width: 100%;
@@ -96,4 +101,4 @@ const Titulo = styled.h2`
     text-decoration: underline;
   }
 `;
-const Enlace=styled(Link)``
+const Enlace = styled(Link)``;

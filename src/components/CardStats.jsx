@@ -31,13 +31,20 @@ export default function CardStats({ qty, img, titulo }) {
 }
 
 const Card = styled.div`
-  width: 250px;
+  flex: 1 1 calc(33.33% - 15px);
   height: 70%;
   /* box-shadow: ${Theme.config.sombra}; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  /* Media query para pantallas móviles */
+  @media (max-width: 768px) {
+    height: auto;
+    border-bottom: 1px solid black;
+    margin-bottom: 15px;
+    flex: 1 1 100%; /* En móviles, ocupa el 100% del ancho */
+  }
 `;
 const Img = styled.img`
   width: 40%;
@@ -45,6 +52,9 @@ const Img = styled.img`
   box-shadow: ${Theme.config.sombra};
   border-radius: 50%;
   padding: 10px;
+  @media screen and (max-width: 720px) {
+    width: 30%;
+  }
 `;
 const QtyCreciente = styled.h2`
   font-size: 2.4rem;
@@ -54,4 +64,6 @@ const QtyCreciente = styled.h2`
 const Titulo = styled.h2`
   color: ${Theme.secondary.azulBrillante};
   font-size: 1.4rem;
+  width: 100%;
+  text-align: center;
 `;

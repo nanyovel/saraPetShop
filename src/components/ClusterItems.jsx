@@ -105,7 +105,6 @@ export default function ClusterItems({
       const hasItemFind = datosEditable.listaProductos.find(
         (item) => item.codigo === codigo
       );
-      console.log(hasItemFind);
       if (hasItemFind) {
         setHasAlerta(true);
         setMensajeAlerta("Este items ya esta agregado.");
@@ -156,7 +155,6 @@ export default function ClusterItems({
       return;
     }
   };
-  console.log(datos);
   return (
     <Container>
       <BotonQuery datosEditable={datosEditable} />
@@ -228,7 +226,7 @@ export default function ClusterItems({
                   </WrapItem>
                 );
               })
-            : datos.listaProductos.map((item, index) => {
+            : datos?.listaProductos?.map((item, index) => {
                 return (
                   <WrapItem key={index}>
                     <UnArticulo index={index} item={item} />
@@ -322,6 +320,14 @@ const CajaBarraNegraSeccion = styled.div`
 const TituloBarra = styled.h2`
   font-size: 1.8rem;
   color: white;
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 1.2rem;
+    text-align: center;
+  }
 `;
 const CajaVerMas = styled.div`
   width: 100%;

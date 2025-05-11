@@ -23,7 +23,10 @@ import {
 } from "../components/ElementosGenerales";
 import MenuPestannias from "../components/MenuPestannias";
 import { Enlace, EnlaceButton } from "../components/GrupoTabla";
-import { useDocByCondition } from "../libs/firebaseLibs";
+import {
+  useDocByCondition,
+  useDocByConditionSinUser,
+} from "../libs/firebaseLibs";
 import { useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
@@ -33,15 +36,24 @@ import db, { storage } from "../firebase/firebaseConfig";
 import { doc, updateDoc, writeBatch } from "firebase/firestore";
 import { ModalLoading } from "../components/ModalLoading";
 import ClusterItems from "../components/ClusterItems";
+import ReactImageGallery from "react-image-gallery";
 
 export default function ArticulosView({ userMaster, dbArticulos }) {
   const param = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [itemsDB, setItemsDB] = useState({});
+  const [itemsDB, setItemsDB] = useState([]);
   const [itemMaster, setItemMaster] = useState({});
   const [datosParsed, setDatosParsed] = useState(false);
-  useDocByCondition("articulos", setItemsDB, "codigo", "==", Number(param.id));
+  // useDocByCondition("articulos", setItemsDB, "codigo", "==", param.id);
+  useDocByConditionSinUser(
+    "articulos",
+    setItemsDB,
+    "codigo",
+    "==",
+    Number(param.id)
+  );
+
   useEffect(() => {
     if (itemsDB.length > 0) {
       console.log(itemsDB[0]);
@@ -49,6 +61,7 @@ export default function ArticulosView({ userMaster, dbArticulos }) {
       setDatosParsed(true);
     }
   }, [itemsDB]);
+
   const [arrayOpciones, setArrayOpciones] = useState([
     {
       select: true,
@@ -76,17 +89,15 @@ export default function ArticulosView({ userMaster, dbArticulos }) {
 
   useEffect(() => {
     if (datosParsed) {
-      if (listaImagenes.length == 0) {
-        const imgParsed2 = itemMaster.fotos.map((img) => {
-          return {
-            original: img.urlFoto,
-            thumbnail: img.urlFoto,
-            description: "",
-          };
-        });
+      const imgParsed2 = itemMaster.fotos.map((img) => {
+        return {
+          original: img.urlFoto,
+          thumbnail: img.urlFoto,
+          description: "",
+        };
+      });
 
-        setListaImagenes(imgParsed2);
-      }
+      setListaImagenes(imgParsed2);
     }
   }, [itemMaster, itemsDB]);
 
@@ -107,6 +118,10 @@ export default function ArticulosView({ userMaster, dbArticulos }) {
     setListaImgEdit((prevState) =>
       prevState.filter((_, index) => index !== indexDataset)
     );
+    setItemEditable((prevState) => ({
+      ...prevState,
+      fotos: prevState.fotos.filter((foto, index) => index != indexDataset),
+    }));
   };
   // ************** MANEJANDO CORTE DE IMAGENES  **************
   // ************** datos del Paquete react easy crop **************
@@ -278,6 +293,7 @@ export default function ArticulosView({ userMaster, dbArticulos }) {
         subCat: itemEditable.subCat,
         precio: itemEditable.precio,
         unidadMedida: itemEditable.unidadMedida,
+        fotos: itemEditable.fotos,
       });
       const batch = writeBatch(db);
       let fotosUp = [...itemMaster.fotos];
@@ -337,6 +353,7 @@ export default function ArticulosView({ userMaster, dbArticulos }) {
       .sort(() => Math.random() - 0.5) // Mezcla aleatoriamente
       .slice(0, 10); // Limita a los primeros 10 items
 
+    console.log(itemsRelax);
     setItemsRelacionados({
       listaProductos: itemsRelax,
     });
@@ -350,7 +367,428 @@ export default function ArticulosView({ userMaster, dbArticulos }) {
     const path = "https://sarapetshop.com/articulos/";
     return apiWhatsApp + encodeURIComponent(textoSaludo + path + codigo);
   };
-  return <h1>Hola</h1>;
+  return (
+    datosParsed && (
+      <>
+        <Header userMaster={userMaster} />
+        <HeroMedium titulo="Producto" imgBg={imgCatBlack} />
+        <BotonQuery itemMaster={itemMaster} listaImagenes={listaImagenes} />
+        <Container>
+          <CajaSideBar>
+            <SideBarCategorias />
+          </CajaSideBar>
+          <ContenedorItem>
+            <CajaControles>
+              {modoEdicion ? (
+                <>
+                  <BotonGeneral onClick={() => cancelarEdicion()}>
+                    Cancelar
+                  </BotonGeneral>
+                  <BotonGeneral onClick={() => guardarCambios()}>
+                    Guardar
+                  </BotonGeneral>
+                </>
+              ) : (
+                <BotonGeneral onClick={() => activarEdicion()}>
+                  Editar
+                </BotonGeneral>
+              )}
+
+              {itemMaster.isActived ? (
+                <BotonGeneral onClick={(e) => desactivar(e)} name="desactivar">
+                  Desactivar
+                </BotonGeneral>
+              ) : (
+                <BotonGeneral onClick={(e) => desactivar(e)} name="activar">
+                  Activar
+                </BotonGeneral>
+              )}
+            </CajaControles>
+            {itemMaster.isActived ? (
+              <></>
+            ) : (
+              <CajaItemDesactivado>
+                <TituloItemDesactivado>
+                  Articulo desactivado
+                </TituloItemDesactivado>
+              </CajaItemDesactivado>
+            )}
+            <WrapTop>
+              <CajaImagenes>
+                {!modoEdicion ? (
+                  <>
+                    {listaImagenes.length > 0 && (
+                      <ContainerGalleri>
+                        <ReactImageGallery items={listaImagenes} />
+                        {!itemMaster.isActived && <BackFilter />}
+                      </ContainerGalleri>
+                    )}
+                    {itemMaster.fotos.length == 0 && (
+                      <CajaTextoSinFoto>
+                        <TextoSinFoto>~ Sin fotos ~</TextoSinFoto>
+                      </CajaTextoSinFoto>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <CajaFotosEdicion>
+                      {listaImgEdit.map((foto, index) => {
+                        return (
+                          <WrapItemFoto key={index}>
+                            <ImgItemFoto src={foto.urlFoto} />
+                            <XquitarFoto
+                              data-index={index}
+                              onClick={(e) => quitarFoto(e)}
+                            >
+                              ❌
+                            </XquitarFoto>
+                            {/* <XquitarFoto
+                              data-index={index}
+                              onClick={(e) => quitarFoto(e)}
+                            >
+                              ✅
+                            </XquitarFoto> */}
+                          </WrapItemFoto>
+                        );
+                      })}
+                    </CajaFotosEdicion>
+                    <CajaBtnUpFile>
+                      <Input
+                        type="file"
+                        ref={inputRef}
+                        autoComplete="off"
+                        accept="image/*"
+                        onChange={handleFile}
+                        className="none"
+                      />
+                      <CajaIcono>
+                        <Icono
+                          onClick={clickFromIcon}
+                          icon={faCloudArrowUp}
+                          title="Cargar foto de perfil"
+                        />
+                        <Parrafo2 className="fotoPerfil">Agregar foto</Parrafo2>
+                      </CajaIcono>
+                    </CajaBtnUpFile>
+                  </>
+                )}
+              </CajaImagenes>
+
+              <CajaDetalles>
+                {!modoEdicion && (
+                  <TituloItem>{itemMaster.descripcion}</TituloItem>
+                )}
+                {modoEdicion && (
+                  <TextAreaText
+                    name="descripcion"
+                    className="titulo"
+                    onChange={(e) => handleInput(e)}
+                    value={itemEditable.descripcion}
+                  />
+                )}
+                <CajaPadding>
+                  {!modoEdicion && (
+                    <SubTituloItem>
+                      {itemMaster.descripcionDetallada}
+                    </SubTituloItem>
+                  )}
+                  {modoEdicion && (
+                    <TextAreaText
+                      className="small"
+                      name="descripcionDetallada"
+                      onChange={(e) => handleInput(e)}
+                      value={itemEditable.descripcionDetallada}
+                    />
+                  )}
+                  <WrapCat className={modoEdicion ? "column" : ""}>
+                    <CajaCategoria>
+                      <TituloCat>SKU:</TituloCat>
+                      <TituloCat className="texto">
+                        {itemMaster.codigo}
+                      </TituloCat>
+                    </CajaCategoria>
+                    <CajaCategoria>
+                      <TituloCat>Categoria:</TituloCat>
+                      {!modoEdicion ? (
+                        <TituloCat className="texto">
+                          {itemMaster.cat}
+                        </TituloCat>
+                      ) : (
+                        <MenuDesp>
+                          <Opciones value={""} disabled>
+                            Seleccione categoria
+                          </Opciones>
+                          {CategoriasLista.map((cat, index) => {
+                            return (
+                              <Opciones key={index} value={cat.nombre}>
+                                {cat.nombre}
+                              </Opciones>
+                            );
+                          })}
+                        </MenuDesp>
+                      )}
+                    </CajaCategoria>
+                    <CajaCategoria>
+                      <TituloCat>SubCategoria:</TituloCat>
+                      {!modoEdicion ? (
+                        <TituloCat className="texto">
+                          {itemMaster.subCat}
+                        </TituloCat>
+                      ) : (
+                        <MenuDesp>
+                          <Opciones value={""} disabled>
+                            Seleccione sub categoria
+                          </Opciones>
+                          {subCategorias.map((cat, index) => {
+                            return (
+                              <Opciones key={index} value={cat.nombre}>
+                                {cat.nombre}
+                              </Opciones>
+                            );
+                          })}
+                        </MenuDesp>
+                      )}
+                    </CajaCategoria>
+                  </WrapCat>
+                  {!modoEdicion && (
+                    <CajaPrecio>
+                      <TituloPrecio>Precio:</TituloPrecio>
+                      <TextoPrecio>{"RD$ " + itemMaster.precio}</TextoPrecio>
+                    </CajaPrecio>
+                  )}
+                  {modoEdicion && (
+                    <CajaPrecio>
+                      <TituloPrecio>Precio:</TituloPrecio>
+                      <Input
+                        value={itemEditable.precio}
+                        autoComplete="off"
+                        name="precio"
+                        onChange={(e) => handleInput(e)}
+                        placeholder="Precio"
+                        type="number"
+                        min={0}
+                        step={0.01}
+                        className="small"
+                      />
+                    </CajaPrecio>
+                  )}
+                  {!modoEdicion && (
+                    <CajaPrecio>
+                      <TituloPrecio className="small">U/M:</TituloPrecio>
+                      <TextoPrecio className="small">
+                        {itemMaster.unidadMedida}
+                      </TextoPrecio>
+                    </CajaPrecio>
+                  )}
+                  {modoEdicion && (
+                    <CajaPrecio>
+                      <TituloPrecio>U/M:</TituloPrecio>
+                      <Input
+                        value={itemEditable.unidadMedida}
+                        autoComplete="off"
+                        name="unidadMedida"
+                        onChange={(e) => handleInput(e)}
+                        placeholder="Unidad de medida"
+                        className="small"
+                      />
+                    </CajaPrecio>
+                  )}
+                  <CajaStar>
+                    <ImgEstrella src={ImgStar} />
+                    <ImgEstrella src={ImgStar} />
+                    <ImgEstrella src={ImgStar} />
+                    <ImgEstrella src={ImgStar} />
+                    <ImgEstrella src={ImgStar} />
+                  </CajaStar>
+                  {!modoEdicion && (
+                    <CajaCTA>
+                      <EnlaceButton
+                        target="_blank"
+                        to={generaLinkWA(itemMaster.codigo)}
+                      >
+                        Comprar
+                      </EnlaceButton>
+                    </CajaCTA>
+                  )}
+                  <CajaDetallesFinal>
+                    <MenuPestannias
+                      handlePestannias={handlePestannias}
+                      arrayOpciones={arrayOpciones}
+                    />
+
+                    {arrayOpciones[0].select && (
+                      <CajaDetallesDes>
+                        {!modoEdicion &&
+                          itemMaster.detalles.map((parrafo, index) => {
+                            return (
+                              <Fragment key={index}>
+                                {parrafo.titulo && (
+                                  <TituloDetalleFinal>
+                                    {parrafo.titulo}
+                                  </TituloDetalleFinal>
+                                )}
+                                {parrafo.texto && (
+                                  <DescripcionDF>{parrafo.texto}</DescripcionDF>
+                                )}
+                                <br />
+                              </Fragment>
+                            );
+                          })}
+                        {modoEdicion &&
+                          itemEditable.detalles.map((parrafo, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <InputText
+                                  autoComplete="off"
+                                  data-index={index}
+                                  data-nombre="detalles"
+                                  data-grado="segundo"
+                                  value={parrafo.titulo}
+                                  onChange={(e) => handleInput(e)}
+                                  name="titulo"
+                                />
+
+                                <TextAreaText
+                                  autoComplete="off"
+                                  data-index={index}
+                                  data-nombre="detalles"
+                                  data-grado="segundo"
+                                  value={parrafo.texto}
+                                  className="small"
+                                  onChange={(e) => handleInput(e)}
+                                  name="texto"
+                                />
+
+                                <br />
+                              </Fragment>
+                            );
+                          })}
+                        {modoEdicion && (
+                          <CajaBtnFinal>
+                            <BotonGeneral
+                              data-nombre="detalles"
+                              name="add"
+                              onClick={(e) => agregarElemento(e)}
+                            >
+                              +
+                            </BotonGeneral>
+                            <BotonGeneral
+                              data-nombre="detalles"
+                              name="minus"
+                              onClick={(e) => agregarElemento(e)}
+                            >
+                              -
+                            </BotonGeneral>
+                          </CajaBtnFinal>
+                        )}
+                      </CajaDetallesDes>
+                    )}
+                    {arrayOpciones[1].select && (
+                      <CajaInterna>
+                        {!modoEdicion &&
+                          itemMaster.caracteristicas.map((cat, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <TituloDetalleFinal>
+                                  {cat.titulo}
+                                </TituloDetalleFinal>
+                                <Lista>
+                                  {cat.items.map((list, i) => {
+                                    return <Elemento key={i}>{list}</Elemento>;
+                                  })}
+                                </Lista>
+                              </Fragment>
+                            );
+                          })}
+                        {modoEdicion &&
+                          itemEditable.caracteristicas.map((cat, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <InputText
+                                  autoComplete="off"
+                                  data-index={index}
+                                  data-grado="segundo"
+                                  data-nombre="caracteristicas"
+                                  name="titulo"
+                                  value={cat.titulo}
+                                  onChange={(e) => handleInput(e)}
+                                />
+                                <Lista>
+                                  {cat.items.map((list, i) => {
+                                    return (
+                                      <TextAreaText
+                                        autoComplete="off"
+                                        name="items"
+                                        data-index={index}
+                                        data-grado="segundo"
+                                        data-subindex={i}
+                                        data-nombre="caracteristicas"
+                                        className="xsmall"
+                                        key={i}
+                                        value={list}
+                                        onChange={(e) => handleInput(e)}
+                                      />
+                                    );
+                                  })}
+                                </Lista>
+                                <CajaBtnFinal className="itemsFt">
+                                  <BtnSmall
+                                    data-index={index}
+                                    className="itemsFt"
+                                    name="add"
+                                    onClick={(e) => addItemsFt(e)}
+                                  >
+                                    +
+                                  </BtnSmall>
+                                  <BtnSmall
+                                    data-index={index}
+                                    className="itemsFt"
+                                    name="minus"
+                                    onClick={(e) => addItemsFt(e)}
+                                  >
+                                    -
+                                  </BtnSmall>
+                                </CajaBtnFinal>
+                              </Fragment>
+                            );
+                          })}
+                        {modoEdicion && (
+                          <CajaBtnFinal>
+                            <BotonGeneral
+                              data-nombre="caracteristicas"
+                              name="add"
+                              onClick={(e) => agregarElemento(e)}
+                            >
+                              +
+                            </BotonGeneral>
+                            <BotonGeneral
+                              data-nombre="caracteristicas"
+                              name="minus"
+                              onClick={(e) => agregarElemento(e)}
+                            >
+                              -
+                            </BotonGeneral>
+                          </CajaBtnFinal>
+                        )}
+                      </CajaInterna>
+                    )}
+                  </CajaDetallesFinal>
+                </CajaPadding>
+              </CajaDetalles>
+            </WrapTop>
+            <WrapBottom>
+              <ClusterItems
+                datos={itemsRelacionados}
+                dbArticulos={dbArticulos}
+              />
+            </WrapBottom>
+          </ContenedorItem>
+        </Container>
+        <Footer />
+        {isLoading && <ModalLoading />}
+      </>
+    )
+  );
 }
 const Container = styled.div`
   width: 100%;
@@ -358,32 +796,52 @@ const Container = styled.div`
   padding: 0 70px;
   gap: 20px;
   margin-bottom: 35px;
+  @media screen and (max-width: 1200px) {
+    flex-direction: column-reverse;
+  }
+  @media screen and (max-width: 1200px) {
+    padding: 0 35px;
+  }
 `;
 const CajaSideBar = styled.div`
   width: calc(20% - 20px);
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 const ContenedorItem = styled.div`
   width: calc(80% - 20px);
   min-height: 200px;
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 const WrapTop = styled.div`
   display: flex;
   min-height: 500px;
+  width: 100%;
   border: 1px solid ${Theme.neutral.neutral600};
   overflow: hidden;
+  @media screen and (max-width: 760px) {
+    flex-direction: column;
+  }
 `;
 const WrapBottom = styled.div``;
 const CajaImagenes = styled.div`
   height: 100%;
   width: calc(50% - 20px);
-  /* background-color: blue; */
-  /* overflow: hidden; */
+  @media screen and (max-width: 760px) {
+    width: 100%;
+  }
 `;
 const CajaDetalles = styled.div`
   width: calc(50% - 20px);
-  padding: 8px;
+
   border: 1px solid ${Theme.neutral.neutral600};
+  @media screen and (max-width: 760px) {
+    width: 100%;
+  }
 `;
 const CajaImgDestacada = styled.div`
   width: 100%;
@@ -396,9 +854,12 @@ const CajaOtrasImg = styled.div`
 `;
 const ImgOtras = styled.img``;
 const TituloItem = styled.h1`
+  padding: 8px;
   font-size: 2rem;
   margin-bottom: 15px;
   color: ${Theme.neutral.neutral600};
+  background-color: ${Theme.primary.rojoCalido};
+  color: white;
 `;
 const SubTituloItem = styled.p`
   color: ${Theme.neutral.neutral600};
@@ -406,12 +867,16 @@ const SubTituloItem = styled.p`
 `;
 const WrapCat = styled.div`
   display: flex;
+  margin-bottom: 8px;
+  width: 100%;
+  flex-wrap: wrap;
   &.column {
     flex-direction: column;
   }
 `;
 const CajaCategoria = styled.div`
   display: flex;
+  /* border: 1px solid red; */
 `;
 const TituloCat = styled.h3`
   margin-right: 5px;
@@ -560,6 +1025,7 @@ const TextAreaText = styled.textarea`
   max-width: 100%;
   min-width: 100%;
   resize: vertical;
+
   &.small {
     font-size: 1rem;
     height: 80px;
@@ -641,4 +1107,22 @@ const TituloRelacionados = styled.h2`
 const WrapItemsSimilares = styled.div`
   width: 100%;
   height: 80%;
+`;
+const CajaPadding = styled.div`
+  width: 100%;
+  padding: 8px;
+`;
+const ContainerGalleri = styled.div`
+  position: relative;
+`;
+const BackFilter = styled.div`
+  position: absolute;
+  top: 0;
+  /* background-color: red; */
+  width: 100%;
+  z-index: 99999999999999999999999999999999;
+  height: 100%;
+  backdrop-filter: grayscale(100%);
+  -webkit-backdrop-filter: grayscale(100%);
+  pointer-events: none; /* permite clics en la imagen */
 `;

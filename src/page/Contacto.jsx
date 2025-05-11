@@ -16,18 +16,15 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import FormContact from "../components/FormContact";
+import ImgBac from "./../../public/img/animales/dog-7866708_1280.jpg";
 import { Link } from "react-router";
+import HeroMedium from "../components/HeroMedium";
 export default function Contacto({ userMaster }) {
   return (
     <>
       <Header userMaster={userMaster} />
-      <ContainerContenido>
-        <CajaImgHero>
-          <CajaFrosting>
-            <Titulo>Contactanos</Titulo>
-          </CajaFrosting>
-        </CajaImgHero>
-      </ContainerContenido>
+      <HeroMedium imgBg={ImgBac} titulo={"Contactos"} />
+
       <Seccion>
         <CajaSubTitulo>
           <SubTitulo>Contactos:</SubTitulo>
@@ -38,7 +35,7 @@ export default function Contacto({ userMaster }) {
               <CajaTitulito>
                 <Titulito>Telefonos:</Titulito>
               </CajaTitulito>
-              <Cajita>
+              <Cajita className="numeros">
                 <CajaNumeros>
                   <Icono icon={faWhatsapp} />
                   <Numeros>809-973-2098</Numeros>
@@ -82,7 +79,7 @@ export default function Contacto({ userMaster }) {
             </WrapContact>
           </CajaInternal>
 
-          <CajaInternal>
+          <CajaInternal className="imgPerro">
             <Img src={ImgPets} />
           </CajaInternal>
         </WrapInternal>
@@ -95,7 +92,7 @@ export default function Contacto({ userMaster }) {
           <CajaInternal className="izq">
             <Img src={ImgMSG} />
           </CajaInternal>
-          <CajaInternal className="der">
+          <CajaInternal className="der contact">
             <CajaForm>
               <FormContact />
             </CajaForm>
@@ -140,37 +137,79 @@ const Seccion = styled.div`
   &.mensaje {
     background-color: ${Theme.neutral.marronOscuro};
     padding: 25px 100px;
+    @media screen and (max-width: 1000px) {
+      padding: 0 50px;
+    }
+    @media screen and (max-width: 800px) {
+      padding: 0 30px;
+    }
+    @media screen and (max-width: 600px) {
+      padding: 0 30px;
+    }
+    @media screen and (max-width: 400px) {
+      padding: 0 15px;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    padding: 0 50px;
+  }
+  @media screen and (max-width: 600px) {
+    padding: 0 30px;
+  }
+  @media screen and (max-width: 400px) {
+    padding: 0 15px;
   }
 `;
 const WrapInternal = styled.div`
   width: 100%;
   display: flex;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    gap: 25px;
+    padding: 15px 0;
+  }
 `;
 const CajaInternal = styled.div`
   width: 48%;
   height: 500px;
 
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    height: auto;
+    &.imgPerro {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
   &.izq {
     padding: 0 15px;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     gap: 10px;
     flex-direction: column;
   }
-  &.der {
+  &.contact {
+    display: flex;
+    justify-content: center;
   }
 `;
 const CajaForm = styled.div`
   width: 80%;
+  @media screen and (max-width: 450px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
 `;
 const WrapContact = styled.div`
   box-shadow: ${Theme.config.sombra};
   width: 100%;
-  padding: 0 15px;
+  padding: 10px 15px;
   margin-bottom: 15px;
-  height: 100px;
-
+  min-height: 100px;
   border-radius: 8px;
 `;
 const CajaRRSS = styled.div`
@@ -188,6 +227,9 @@ const Cajita = styled.div`
   justify-content: center;
 
   gap: 15px;
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+  }
 `;
 const CajaSubTitulo = styled.div`
   width: 100%;
@@ -209,14 +251,15 @@ const Titulito = styled.h3`
   color: ${Theme.secondary.azulBrillante};
 `;
 const CajaNumeros = styled.div`
-  font-size: 1.5rem;
   color: ${Theme.primary.rojoBrillante};
   display: flex;
   align-items: center;
 `;
-const Numeros = styled.h3``;
+const Numeros = styled.h3`
+  font-size: 1.5rem;
+`;
 const Icono = styled(FontAwesomeIcon)`
-  font-size: 2rem;
+  font-size: 1.5rem;
 
   color: ${Theme.primary.rojoBrillante};
   cursor: pointer;
@@ -235,6 +278,14 @@ const Img = styled.img`
   object-fit: cover;
   box-shadow: ${Theme.config.sombra};
   border-radius: 6px;
+  @media screen and (max-width: 800px) {
+    height: 400px;
+    width: auto;
+  }
+  @media screen and (max-width: 600px) {
+    width: 90%;
+    height: auto;
+  }
 `;
 const Parrafo = styled.p``;
 const Enlace = styled(Link)``;

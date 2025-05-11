@@ -42,8 +42,14 @@ const CajaImg = styled.div`
   margin-bottom: -4px;
   background-image: url("/img/animales/perro4.jpg");
   background-attachment: fixed;
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  @media screen and (max-width: 640px) {
+    height: 40vh;
+    /* background-position: top; */
+    background-size: 150%;
+  }
 `;
 const Img = styled.img`
   width: 100%;

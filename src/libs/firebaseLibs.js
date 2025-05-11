@@ -52,3 +52,35 @@ export const useDocByCondition = (
   }, [collectionName, setState, exp1, condicion, exp2, usuario]);
 };
 
+export const useDocByConditionSinUser = (
+  collectionName,
+  setState,
+  exp1,
+  condicion,
+  exp2
+) => {
+  useEffect(() => {
+    // Este condicional es para que si el usuario ya descargo la base de datos pues que no vuelva a cargar, aunque el componente de desmonte y se vuelva a montar
+
+    console.log("DB 😐😐😐😐😐" + collectionName);
+    let q;
+
+    if (exp1) {
+      q = query(collection(db, collectionName), where(exp1, condicion, exp2));
+    } else {
+      q = query(collection(db, collectionName));
+    }
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const coleccion = [];
+      querySnapshot.forEach((doc) => {
+        coleccion.push({ ...doc.data(), id: doc.id });
+      });
+      // console.log(coleccion);
+      setState(coleccion);
+    });
+
+    // Limpieza de la escucha al desmontar
+    return () => unsubscribe();
+  }, [collectionName, setState, exp1, condicion, exp2]);
+};

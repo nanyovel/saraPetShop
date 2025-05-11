@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Mascotas from "../page/SubCategorias/Mascotas";
 import Accesorios from "../page/SubCategorias/Accesorios";
 import Alimentos from "../page/SubCategorias/Alimentos";
+import SaludHigiene from "../page/SubCategorias/SaludHigiene";
 
 export default function SubCategoriasRoutes({
   userMaster,
@@ -27,6 +28,12 @@ export default function SubCategoriasRoutes({
     "T82EFmgwXpOQoGAM8xCW",
     "QdEMMeei4tSUnJXEkW2R",
     "turDHROd2pvQ66TUkm4O",
+  ];
+  const idGruposItemsSaludHigiene = [
+    "fCeoWe7K6EiY7VdvmQf2",
+    "06o6lNrWtxshwDdp3BA5",
+    "0QTjKHVBzU4YuIuMGjAv",
+    "RXZPqAJ0KZFc3ysLgUr7",
   ];
 
   return (
@@ -58,6 +65,17 @@ export default function SubCategoriasRoutes({
           path="/alimentos"
           element={
             <Alimentos
+              userMaster={userMaster}
+              dbArticulos={dbArticulos}
+              grupoCluster={grupoCluster}
+              idGruposItems={idGruposItemsAlimentos}
+            />
+          }
+        />
+        <Route
+          path="/saludHigiene"
+          element={
+            <SaludHigiene
               userMaster={userMaster}
               dbArticulos={dbArticulos}
               grupoCluster={grupoCluster}

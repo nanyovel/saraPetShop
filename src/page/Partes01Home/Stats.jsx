@@ -30,7 +30,7 @@ export default function Stats() {
   }, []);
   return (
     <Container ref={elementRef}>
-      <CajaImg />
+      {/* <CajaImg /> */}
       <CajaFrosting>
         {isVisible && (
           <>
@@ -51,7 +51,6 @@ const Container = styled.div`
   background-color: ${Theme.primary.mostazaDorado};
   width: 100%;
   min-height: 100px;
-  position: relative;
 `;
 const CajaImg = styled.div`
   width: 100%;
@@ -64,35 +63,12 @@ const CajaImg = styled.div`
 `;
 const CajaFrosting = styled.div`
   width: 100%;
-  height: 50vh;
+  min-height: 50vh;
   background-color: #d5a14196;
-  position: absolute;
-  top: 0;
-  left: 0;
+
   display: flex;
-  gap: 40px;
+  gap: 15px;
   justify-content: center;
   align-items: center;
-`;
-const Card = styled.div`
-  width: 250px;
-  height: 70%;
-  border: 1px solid ${Theme.primary.azulProfundo};
-  box-shadow: ${Theme.config.sombra};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-const Img = styled.img`
-  width: 40%;
-`;
-const QtyCreciente = styled.h2`
-  font-size: 2.4rem;
-  color: #22427a;
-  color: #fff;
-`;
-const Titulo = styled.h2`
-  color: ${Theme.primary.azulProfundo};
-  font-size: 1.4rem;
+  flex-wrap: wrap;
 `;

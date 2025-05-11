@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Theme from "../config/Theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Articulos from "./Articulos";
+// import Articulos from "./Articulos";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function SeccionVenta({ titulo, subtitulo, btnMasDisabled }) {
@@ -13,7 +13,7 @@ export default function SeccionVenta({ titulo, subtitulo, btnMasDisabled }) {
         <CajaBarraNegraSeccion className="top">
           <TituloBarra>{subtitulo}</TituloBarra>
         </CajaBarraNegraSeccion>
-        <Articulos tipo={"ofertas"} />
+        {/* <Articulos tipo={"ofertas"} /> */}
         {!btnMasDisabled && (
           <CajaVerMas>
             <TextoVerMas>

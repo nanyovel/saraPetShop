@@ -28,7 +28,7 @@ export default function CarrucelMarcas({ invertido }) {
   );
 }
 const Container = styled.div`
-  /* overflow: hidden; */
+  overflow: hidden;
   width: 100%;
   display: flex;
   align-items: center;
@@ -48,25 +48,52 @@ const scroll = (invertido) => keyframes`
 const LogoTrack = styled.div`
   display: flex;
   right: ${(props) => (props.$invertido ? "0" : "auto")};
-  position: absolute;
   width: calc(200%);
   flex-direction: ${(props) => (props.$invertido ? "row-reverse" : "row")};
   animation: ${(props) => scroll(props.$invertido)} 25s linear infinite;
+  @media screen and (max-width: 750px) {
+    animation: ${(props) => scroll(props.$invertido)} 10s linear infinite;
+  }
+  @media screen and (max-width: 650px) {
+    animation: ${(props) => scroll(props.$invertido)} 8s linear infinite;
+  }
+  @media screen and (max-width: 500px) {
+    animation: ${(props) => scroll(props.$invertido)} 5s linear infinite;
+  }
 `;
 // Cada logo
 const Logo = styled.div`
   flex: 0 0 auto;
-  width: 150px; /* Ajusta el tamaño del logo */
-  height: 100px;
+  width: 220px; /* Ajusta el tamaño del logo */
+  height: 110px;
   margin: 0 15px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   box-shadow: ${Theme.config.sombra};
+  padding: 8px;
+  @media screen and (max-width: 500px) {
+    width: 180px;
+  }
 
   img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+  }
+`;
+const Img = styled.img`
+  width: 70px;
+  @media screen and (max-width: 500px) {
+    width: 45px;
+  }
+`;
+const Titulo = styled.h2`
+  font-size: 1rem;
+  text-decoration: center;
+  color: ${Theme.primary.mostazaDorado};
+  @media screen and (max-width: 500px) {
+    font-size: 0.9rem;
   }
 `;

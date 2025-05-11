@@ -78,7 +78,7 @@ export default function Dashboard({ userMaster }) {
   const crearItem = (codigo) => {
     const nuevoItem = {
       ...itemSchema,
-      codigo: String(codigo),
+      codigo: Number(codigo),
       descripcion: "Nuevo articulo",
       isActived: false,
       createdAt: ES6AFormat(new Date()),

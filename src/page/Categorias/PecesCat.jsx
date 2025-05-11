@@ -125,16 +125,31 @@ export default function GatosCat({
     </>
   );
 }
+
 const Seccion = styled.div``;
 const WrapMaster = styled.div`
   display: flex;
   padding: 0 70px;
   gap: 20px;
+  @media screen and (max-width: 1150px) {
+    padding: 0 30px;
+    /* background-color: red; */
+  }
+  @media screen and (max-width: 1050px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    /* background-color: red; */
+  }
 `;
 const CajaSideBar = styled.div`
-  width: calc(20% - 20px);
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+  }
 `;
 const WrapSecciones = styled.div`
   width: calc(80% - 20px);
   min-height: 200px;
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+  }
 `;

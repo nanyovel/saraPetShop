@@ -112,13 +112,14 @@ export default function Servicios() {
 }
 const Container = styled.div`
   width: 100%;
-  height: 350px;
+  min-height: 350px;
   display: flex;
   padding: 0 30px;
   gap: 10px;
+  flex-wrap: wrap;
 `;
 const Card = styled.div`
-  width: 20%;
+  flex: 1;
   height: 300px;
   border: 1px solid ${Theme.neutral.blancoHueso};
   border-radius: 5px;
@@ -129,7 +130,17 @@ const Card = styled.div`
     cursor: pointer;
     box-shadow: ${Theme.config.sombraAzul1};
     height: 350px;
-    width: 28%;
+    /* flex: 1.3; */
+    flex: 1 1 calc(((100% - 20px) / 3) * 1.2);
+  }
+  @media screen and (max-width: 1000px) {
+    flex: 1 1 calc((100% - 20px) / 3);
+  }
+  @media screen and (max-width: 640px) {
+    flex: 1 1 calc((100% - 20px) / 2);
+  }
+  @media screen and (max-width: 460px) {
+    flex: 1 1 100%;
   }
 `;
 const CajaIcono = styled.div`

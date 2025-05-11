@@ -9,11 +9,13 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { getAuth } from "firebase/auth";
 import CajaConfirmarEmail from "./CajaConfirmarEmail";
+import BotonQuery from "./BotonQuery";
 
 export default function Header({ home, userMaster }) {
   const navegacion = useNavigate();
   const auth = getAuth();
   const usuario = auth.currentUser;
+  console.log(userMaster);
 
   const location = useLocation().pathname;
   return (
@@ -21,7 +23,8 @@ export default function Header({ home, userMaster }) {
       <Container className={home ? "home" : ""}>
         <CajaLogoTel>
           <CajitaInterna className="izq">
-            <Img src="https://i.ibb.co/D5fV0HY/logo-sara-pet-shop.png" />
+            <BotonQuery userMaster={userMaster} />
+            {/* <Img src="https://i.ibb.co/D5fV0HY/logo-sara-pet-shop.png" /> */}
           </CajitaInterna>
           <WrapTel>
             <TextoTel className="tel">
@@ -74,14 +77,14 @@ export default function Header({ home, userMaster }) {
           <Icono className="user" icon={faCartShopping} />
           Carrito
         </CajaLog> */}
-          {!usuario && (
+          {/* {!usuario && (
             <Enlace to={"/login"}>
               <CajaLog>
                 <Icono className="user" icon={faUser} />
                 Iniciar Sesion
               </CajaLog>
             </Enlace>
-          )}
+          )} */}
           {userMaster && (
             <Enlaces className={"perfil"} to={"/perfil"}>
               <CajaPerfil>
@@ -137,14 +140,15 @@ const Container = styled.header`
   @media screen and (max-width: 1100px) {
     padding: 1px 50px;
   }
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: 730px) {
     display: flex;
     flex-direction: column;
     height: auto;
     padding: 1px 30px;
   }
-  @media screen and (max-width: 420px) {
-    padding: 1px 5px;
+
+  @media screen and (max-width: 520px) {
+    padding: 1px 12px;
   }
 `;
 
@@ -157,12 +161,12 @@ const CajaLogoTel = styled.div`
     flex-direction: column;
     gap: 0;
   }
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: 730px) {
     margin-bottom: 10px;
   }
 `;
 const WrapTel = styled.div`
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: 730px) {
     display: flex;
     gap: 10px;
   }
@@ -174,7 +178,7 @@ const NavBar = styled.nav`
   height: 100%;
   /* color: ${Theme.primary.rojoBrillante}; */
   color: #fff;
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: 730px) {
     width: 100%;
     margin-bottom: 10px;
   }
@@ -186,7 +190,7 @@ const Img = styled.img`
     width: auto;
     height: 100%;
   }
-  @media screen and (max-width: 680px) {
+  @media screen and (max-width: 730px) {
     height: 50px;
   }
 `;
@@ -253,6 +257,10 @@ const NavList = styled.ul`
   align-items: center;
   @media screen and (max-width: 680px) {
     width: 100%;
+  }
+  @media screen and (max-width: 520px) {
+    overflow-x: scroll;
+    height: auto;
   }
 `;
 

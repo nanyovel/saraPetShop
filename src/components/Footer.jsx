@@ -85,6 +85,11 @@ const Container = styled.footer`
   display: flex;
   justify-content: center;
   gap: 15px;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    height: auto;
+    padding: 25px;
+  }
 `;
 const Columna = styled.section`
   width: 30%;
@@ -96,6 +101,12 @@ const Columna = styled.section`
   align-items: center;
   &.sinBordes {
     border: none;
+  }
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    margin-bottom: 25px;
+    border-bottom: 2px solid ${Theme.primary.rojoBrillante};
+    border-right: none;
   }
 `;
 const TituloSara = styled.h1`
@@ -124,6 +135,9 @@ const Titulo = styled.h3`
 const Img = styled.img`
   width: 50%;
   border-radius: 50%;
+  @media screen and (max-width: 800px) {
+    width: 100px;
+  }
 `;
 const Lista = styled.ul`
   color: ${Theme.neutral.neutral600};

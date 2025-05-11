@@ -12,6 +12,8 @@ import Page404 from "../page/Page404";
 import Dashboard from "../page/Dashboard";
 import ArticulosView from "../view/ArticulosView";
 import SubCategoriasRoutes from "./SubCategoriasRoutes";
+import { RutaProtegida } from "../context/RutaProtegida";
+import { RutaPrivilegiada } from "../context/RutaPrivilegiada";
 
 export default function MasterRoutes({
   userMaster,
@@ -72,10 +74,21 @@ export default function MasterRoutes({
           />
         }
       />
+
       <Route
-        path="/dashboard"
-        element={<Dashboard userMaster={userMaster} />}
+        path="/dashboard/*"
+        element={
+          <RutaProtegida>
+            <RutaPrivilegiada
+              userMaster={userMaster}
+              privilegioReq="accessDashboard"
+            >
+              <Dashboard userMaster={userMaster} />
+            </RutaPrivilegiada>
+          </RutaProtegida>
+        }
       />
+
       <Route
         path="/articulos/:id"
         element={

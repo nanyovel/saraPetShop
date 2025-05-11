@@ -173,7 +173,8 @@ export const Perfil = ({ userMaster }) => {
   const cerrarSesion = async () => {
     try {
       await signOut(autenticar);
-      navegacion("/");
+      window.location.href = "/";
+      // navegacion("/");
     } catch (error) {
       console.log(error);
       setMensajeAlerta("Error al cerrar sesion.");
